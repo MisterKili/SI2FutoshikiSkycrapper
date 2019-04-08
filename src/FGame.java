@@ -21,8 +21,22 @@ public class FGame extends Game {
     }
 
     @Override
-    public boolean checkConstraints() {
-        return false;
+    public boolean checkConstraints(int x, int y, int num) {
+        int x1, x2, y1, y2;
+        for(int i=0; i<constraints.length; i++){
+            x1 = constraints[i][0];
+            y1 = constraints[i][1];
+            x2 = constraints[i][2];
+            y2 = constraints[i][3];
+            if(x1 == x && y1 == y){
+                if(game[x2][y2].getValue() != 0 && num > game[x2][y2].getValue())
+                    return false;
+            }else if(x2 == x && y2 == y){
+                if(game[x1][x2].getValue() != 0 && num < game[x1][y1].getValue())
+                    return false;
+            }
+        }
+        return true;
     }
 
     @Override

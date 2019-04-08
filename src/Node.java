@@ -37,6 +37,10 @@ public class Node{
         this.isDone = true;
     }
 
+    public int getValue(){
+        return value;
+    }
+
     public void setCords(int x, int y){
         cord_x = x;
         cord_y = y;

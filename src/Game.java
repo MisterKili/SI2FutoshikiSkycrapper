@@ -36,19 +36,23 @@ public abstract class Game {
         }
     }
 
-    //TODO: sprawdzanie wszystkich ograniczeń
-    public boolean check(){ //metoda wywołuje checkConstarints i checkCross, true jeśli można wpisąć liczbę
-        return false;
+    public boolean check(int x, int y, int num){ //metoda wywołuje checkConstarints i checkCross, true jeśli można wpisąć liczbę
+        if(!checkCross(x, y, num) || !checkConstraints(x, y, num))
+            return false;
+        else return true;
     }
 
-    //TODO: sprawdzenie czy w krzyżu liczba już wystąpiłą
-    public boolean checkCross(){ //true jeśli może być umieszczona, false jeśli liczba już się pojawiła
-        return false;
+    public boolean checkCross(int x, int y, int num){ //true jeśli może być umieszczona, false jeśli liczba już się pojawiła
+        for (int i=0; i<size; i++){
+            if((game[x][i].getValue() == num && i!=y) || game[i][y].getValue() == num && i!=x)
+                return false;
+        }
+        return true;
     }
 
 
     public abstract void printConstraints();
     public abstract void addConstraints(ArrayList<String> cons);
-    //TODO: nadpisanie w FGame i SGame
-    public abstract boolean checkConstraints(); //musi być nadpisane w kazdej z gier osobno, true jeśli liczba nie łamie ograniczeń
+    //TODO: nadpisanie SGame
+    public abstract boolean checkConstraints(int x, int y, int num); //musi być nadpisane w kazdej z gier osobno, true jeśli liczba nie łamie ograniczeń
 }
