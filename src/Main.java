@@ -6,7 +6,7 @@ public class Main {
 //        loader.loadFutoshiki(path);
 
         Loader loader = new Loader();
-        FGame game = loader.read("futoshiki_4_0.txt");
+        FGame game = loader.read("test_futo_4_0.txt");
         game.printBoard();
     }
 }

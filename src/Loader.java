@@ -12,7 +12,7 @@ public class Loader {
     }
 
     public FGame read(String fileName){
-        String fullPath = "C:\\Users\\wkili\\Desktop\\Studia\\Semestr 6\\Sztuczna inteligencja\\Laby\\Zadanie 2\\CSP_2019_dane_testowe_v1.0\\"+fileName;
+        String fullPath = "data/"+fileName;
         File file = new File(fullPath);
         FGame game = new FGame();
         try(Scanner scanner  = new Scanner(file)){
