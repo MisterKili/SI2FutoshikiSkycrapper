@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Loader {
@@ -19,8 +20,8 @@ public class Loader {
             int dim = scanner.nextInt();
             game.setSize(dim);
             String currLine;
-            scanner.nextLine();
-            scanner.nextLine();
+            System.out.println(scanner.nextLine());
+            System.out.println(scanner.nextLine());
             String [] splited;
             int val;
             for (int i = 0; i<dim; i++){
@@ -31,9 +32,19 @@ public class Loader {
                     game.setValue(val, i, j);
                 }
             }
-            scanner.nextLine();
+            System.out.println(scanner.nextLine());
+
 
         //TODO: wczytywanie ograniczen
+
+            ArrayList<String> constraints = new ArrayList<>();
+            while(scanner.hasNext()){
+                currLine = scanner.nextLine();
+                constraints.add(currLine);
+            }
+            game.addConstraints(constraints);
+
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,7 +94,7 @@ public class Loader {
                     int row1 = getIntFromChar(rel[0].charAt(0));
                     int col1 = Integer.parseInt(rel[0].substring(1));
                     int row2 = getIntFromChar(rel[1].charAt(0));
-                    int col2 = Integer.parseInt(rel[1].substring(1));;
+                    int col2 = Integer.parseInt(rel[1].substring(1));
                     int where = UpDownLeftRight(row1, col1, row2, col2);
                     futoshiki[row1][col1][where]= -1;
                 }

@@ -8,5 +8,6 @@ public class Main {
         Loader loader = new Loader();
         FGame game = loader.read("test_futo_4_0.txt");
         game.printBoard();
+        game.printConstraints();
     }
 }
