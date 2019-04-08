@@ -7,7 +7,12 @@ public class Main {
 
         Loader loader = new Loader();
         FGame game = loader.readFuto("test_futo_4_0.txt");
+        System.out.println("Futoshiki");
         game.printBoard();
         game.printConstraints();
+        SGame gameSky = loader.readSky("test_sky_4_0.txt");
+        System.out.println("Skycrapper");
+        gameSky.printBoard();
+        gameSky.printConstraints();
     }
 }

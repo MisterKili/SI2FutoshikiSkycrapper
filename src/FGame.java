@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class FGame extends Game {
 
-    int [][] constraints;
-
     @Override
     public void addConstraints(ArrayList<String> cons){
         constraints = new int[cons.size()][4];
@@ -41,6 +39,7 @@ public class FGame extends Game {
 
     @Override
     public void printConstraints(){
+        System.out.println("Futoshiki constraints:");
         for(int i=0; i<constraints.length; i++){
             System.out.println(constraints[i][0] + "\t" + constraints[i][1] + "\t" + constraints[i][2] + "\t" + constraints[i][3]);
         }

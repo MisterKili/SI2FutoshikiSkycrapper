@@ -4,6 +4,7 @@ public abstract class Game {
 
     int size;
     Node[][] game;
+    int [][] constraints;
 
 
     public int getSize(){
@@ -30,7 +31,7 @@ public abstract class Game {
     public void printBoard(){
         for(int i = 0; i<size; i++){
             for(int j = 0; j<size; j++){
-                System.out.print(game[i][j].value);
+                System.out.print(game[i][j].value+"\t");
             }
             System.out.println();
         }
