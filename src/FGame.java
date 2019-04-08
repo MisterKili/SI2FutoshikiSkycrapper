@@ -1,31 +1,8 @@
 import java.util.ArrayList;
 
-public class FGame {
+public class FGame extends Game {
 
-    int size;
-    FNode [][] game;
     int [][] constraints;
-
-    public int getSize(){
-        return size;
-    }
-
-    public void setSize(int s){
-        game = new FNode[s][s];
-        size = s;
-    }
-
-    public void setValue(int val, int i, int j){
-        game[i][j] = new FNode(val, i, j);
-    }
-
-    public FNode getNode(int i, int j){
-        return game[i][j];
-    }
-
-    public void addConstraint(FNode smaller, FNode bigger){
-
-    }
 
     public void addConstraints(ArrayList<String> cons){
         constraints = new int[cons.size()][4];
@@ -41,20 +18,6 @@ public class FGame {
             constraints[i][3] = bigger_y-1;
         }
     }
-
-    private int getIntFromChar(char letter){
-        return letter%65;
-    }
-
-    public void printBoard(){
-        for(int i = 0; i<size; i++){
-            for(int j = 0; j<size; j++){
-                System.out.print(game[i][j].value);
-            }
-            System.out.println();
-        }
-    }
-
     public void printConstraints(){
         for(int i=0; i<constraints.length; i++){
             System.out.println(constraints[i][0] + "\t" + constraints[i][1] + "\t" + constraints[i][2] + "\t" + constraints[i][3]);

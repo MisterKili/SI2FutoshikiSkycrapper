@@ -1,4 +1,4 @@
-public class FNode {
+public class Node{
 
     boolean isDone;
     int value;
@@ -6,13 +6,13 @@ public class FNode {
     int cord_x;
     int cord_y;
 
-    public FNode(FGame game){
+    public Node(FGame game){
         posibleValues = new int[game.getSize()];
         value = 0;
         isDone = false;
     }
 
-    public FNode(int val){
+    public Node(int val){
         this.value = val;
         if(val == 0){
             isDone = false;
@@ -21,7 +21,7 @@ public class FNode {
         }
     }
 
-    public FNode(int val, int x, int y){
+    public Node(int val, int x, int y){
         this.value = val;
         cord_x = x;
         cord_y = y;
