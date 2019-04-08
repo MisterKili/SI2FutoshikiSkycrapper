@@ -11,7 +11,7 @@ public class Main {
         game.printBoard();
         game.printConstraints();
         SGame gameSky = loader.readSky("test_sky_4_0.txt");
-        System.out.println("Skycrapper");
+        System.out.println("Skyscrapper");
         gameSky.printBoard();
         gameSky.printConstraints();
     }

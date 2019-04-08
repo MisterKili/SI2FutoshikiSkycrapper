@@ -12,7 +12,7 @@ public class SGame extends Game {
 
     @Override
     public void printConstraints() {
-        System.out.println("Skycrapper constraints:");
+        System.out.println("Skyscrapper constraints:");
         for(int i = 0 ; i<constraints.length ; i++) {
             for (int j = 0; j < constraints[i].length; j++)
                 System.out.print(constraints[i][j] + "\t");

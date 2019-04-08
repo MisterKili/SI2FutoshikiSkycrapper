@@ -50,7 +50,6 @@ public class Loader {
         SGame game = new SGame();
         try(Scanner scanner  = new Scanner(file)){
             int dim = scanner.nextInt();
-//            System.out.println(dim);
             game.setSize(dim);
             scanner.nextLine();
             ArrayList<String> constraints = new ArrayList<>();
@@ -58,16 +57,6 @@ public class Loader {
                 constraints.add(scanner.nextLine());
             }
             game.addConstraints(constraints);
-//            int []cons;
-//            while (scanner.hasNext()){
-//                String []splited = scanner.nextLine().split(";");
-//                cons = new int [splited.length-1];
-//                for(int i = 1; i<splited.length; i++){
-//                    cons[i-1] = Integer.parseInt(splited[i]);
-//                }
-//                constraints.add(cons);
-//
-//            }
 
 
         } catch (FileNotFoundException e) {
