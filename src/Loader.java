@@ -31,7 +31,6 @@ public class Loader {
             System.out.println(scanner.nextLine());
 
 
-        //TODO: wczytywanie ograniczen
 
             ArrayList<String> constraints = new ArrayList<>();
             while(scanner.hasNext()){

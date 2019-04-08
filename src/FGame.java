@@ -18,6 +18,12 @@ public class FGame extends Game {
             constraints[i][3] = bigger_y-1;
         }
     }
+
+    @Override
+    public boolean checkConstraints() {
+        return false;
+    }
+
     public void printConstraints(){
         for(int i=0; i<constraints.length; i++){
             System.out.println(constraints[i][0] + "\t" + constraints[i][1] + "\t" + constraints[i][2] + "\t" + constraints[i][3]);

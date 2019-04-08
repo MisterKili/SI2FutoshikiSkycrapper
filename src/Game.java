@@ -36,6 +36,19 @@ public abstract class Game {
         }
     }
 
+    //TODO: sprawdzanie wszystkich ograniczeń
+    public boolean check(){ //metoda wywołuje checkConstarints i checkCross, true jeśli można wpisąć liczbę
+        return false;
+    }
+
+    //TODO: sprawdzenie czy w krzyżu liczba już wystąpiłą
+    public boolean chechCross(){ //true jeśli może być umieszczona, false jeśli liczba już się pojawiła
+        return false;
+    }
+
+
     public abstract void printConstraints();
     public abstract void addConstraints(ArrayList<String> cons);
+    //TODO: nadpisanie w FGame i SGame
+    public abstract boolean checkConstraints(); //musi być nadpisane w kazdej z gier osobno, true jeśli liczba nie łamie ograniczeń
 }
