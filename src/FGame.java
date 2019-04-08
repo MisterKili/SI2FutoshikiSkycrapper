@@ -4,6 +4,7 @@ public class FGame extends Game {
 
     int [][] constraints;
 
+    @Override
     public void addConstraints(ArrayList<String> cons){
         constraints = new int[cons.size()][4];
         for(int i = 0; i<cons.size(); i++){
@@ -24,6 +25,7 @@ public class FGame extends Game {
         return false;
     }
 
+    @Override
     public void printConstraints(){
         for(int i=0; i<constraints.length; i++){
             System.out.println(constraints[i][0] + "\t" + constraints[i][1] + "\t" + constraints[i][2] + "\t" + constraints[i][3]);

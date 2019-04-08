@@ -42,7 +42,7 @@ public abstract class Game {
     }
 
     //TODO: sprawdzenie czy w krzyżu liczba już wystąpiłą
-    public boolean chechCross(){ //true jeśli może być umieszczona, false jeśli liczba już się pojawiła
+    public boolean checkCross(){ //true jeśli może być umieszczona, false jeśli liczba już się pojawiła
         return false;
     }
 
