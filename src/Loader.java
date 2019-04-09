@@ -25,7 +25,7 @@ public class Loader {
                 splited = currLine.split(";");
                 for (int j = 0; j<dim; j++){
                     val = Integer.parseInt(splited[j]);
-                    game.setValue(val, i, j);
+                    game.setInitValue(val, i, j);
                 }
             }
             scanner.nextLine();

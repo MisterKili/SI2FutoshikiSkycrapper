@@ -1,15 +1,17 @@
 public class Node{
 
     boolean isDone;
+    boolean isConstant;
     int value;
-    int [] posibleValues;
+    int [] domain;
     int cord_x;
     int cord_y;
 
     public Node(FGame game){
-        posibleValues = new int[game.getSize()];
+        domain = new int[game.getSize()];
         value = 0;
         isDone = false;
+        isConstant= false;
     }
 
     public Node(int val){
@@ -27,8 +29,10 @@ public class Node{
         cord_y = y;
         if(val == 0){
             isDone = false;
+            isConstant = false;
         }else {
             isDone = true;
+            isConstant = true;
         }
     }
 
@@ -37,6 +41,7 @@ public class Node{
         this.isDone = true;
     }
 
+
     public int getValue(){
         return value;
     }
@@ -44,6 +49,13 @@ public class Node{
     public void setCords(int x, int y){
         cord_x = x;
         cord_y = y;
+    }
+
+    public boolean isDomainEmpty(){
+        for(int i = 0; i < domain.length; i++)
+            if(domain[i] == 1)
+                return false;
+        return true;
     }
 
 }

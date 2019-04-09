@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class FGame extends Game {
 
+
+
     @Override
     public void addConstraints(ArrayList<String> cons){
         constraints = new int[cons.size()][4];
@@ -27,10 +29,10 @@ public class FGame extends Game {
             x2 = constraints[i][2];
             y2 = constraints[i][3];
             if(x1 == x && y1 == y){
-                if(game[x2][y2].getValue() != 0 && num > game[x2][y2].getValue())
+                if(board[x2][y2].getValue() != 0 && num > board[x2][y2].getValue())
                     return false;
             }else if(x2 == x && y2 == y){
-                if(game[x1][x2].getValue() != 0 && num < game[x1][y1].getValue())
+                if(board[x1][x2].getValue() != 0 && num < board[x1][y1].getValue())
                     return false;
             }
         }

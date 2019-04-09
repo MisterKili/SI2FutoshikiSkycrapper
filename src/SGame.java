@@ -4,7 +4,7 @@ public class SGame extends Game {
 
     public void setSize(int s){
         size = s;
-        game = new Node[size][size];
+        board = new Node[size][size];
         for(int i = 0; i<size; i++)
             for (int j = 0; j<size; j++)
                 setValue(0, i, j);
