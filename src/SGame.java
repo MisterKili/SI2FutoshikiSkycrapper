@@ -49,6 +49,7 @@ public class SGame extends Game {
 
     @Override
     public boolean checkConstraints(int x, int y, int num) {
+
         //z góry
         int visible = 0;
         int wanted = constraints[0][y];

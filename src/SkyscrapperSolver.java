@@ -37,7 +37,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     public boolean bt(int x, int y){
-
+        System.out.println("chdhdhdh");
         if(solved) return true;
         else {
             steps++;
