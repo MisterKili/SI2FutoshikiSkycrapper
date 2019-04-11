@@ -10,9 +10,14 @@ public class Main {
         System.out.println("Futoshiki");
         game.printBoard();
         game.printConstraints();
-        SGame gameSky = loader.readSky("test_sky_4_0.txt");
-        System.out.println("Skyscrapper");
-        gameSky.printBoard();
-        gameSky.printConstraints();
+        System.out.println(game.nextNode(0,1).value);
+        FutoshikiSolver f_solver = new FutoshikiSolver(game);
+        f_solver.solve(0);
+
+
+//        SGame gameSky = loader.readSky("test_sky_4_0.txt");
+//        System.out.println("Skyscrapper");
+//        gameSky.printBoard();
+//        gameSky.printConstraints();
     }
 }

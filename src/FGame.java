@@ -2,7 +2,18 @@ import java.util.ArrayList;
 
 public class FGame extends Game {
 
+    public FGame(){
 
+    }
+
+    public FGame(FGame other){
+        size = other.size;
+        board = new Node[size][size];
+        for(int i = 0; i< size; i++)
+            for(int j=0; j<size; j++)
+                board[i][j] = new Node(other.board[i][j].getValue(), other.board[i][j].getCord_x(), other.board[i][j].getCord_y());
+        constraints = other.constraints;
+    }
 
     @Override
     public void addConstraints(ArrayList<String> cons){

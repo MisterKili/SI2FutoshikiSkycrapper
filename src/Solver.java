@@ -1,4 +1,10 @@
 public abstract class Solver {
-    Game f_board;
+
+    protected int steps ;
+    protected int solutions;
+    protected long time;
+
+
+    public abstract boolean backtracking(int x, int y);
 
 }

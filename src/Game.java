@@ -119,6 +119,8 @@ public abstract class Game {
     }
 
     public boolean check(int x, int y, int num){ //metoda wywołuje checkConstarints i checkCross, true jeśli można wpisąć liczbę
+        if(board[x][y].isConstant)
+            return true;
         if(!checkCross(x, y, num) || !checkConstraints(x, y, num))
             return false;
         else return true;
@@ -157,6 +159,14 @@ public abstract class Game {
             }
         }
         return nextOne;
+    }
+
+    public void initNewBoard(){
+        for(int i = 0; i<size; i++)
+            for(int j = 0 ;j<size; j++)
+                if(!board[i][j].isConstant)
+                    board[i][j].setValue(0);
+        initDomains();
     }
 
     public abstract void printConstraints();
