@@ -55,7 +55,7 @@ public class SGame extends Game {
         int wanted = constraints[0][y];
         int maxVal = board[0][y].value;
 
-        for(int i=0;i<=x;i++){
+        for(int i=0;i<size;i++){
             if(board[i][y].value > maxVal && maxVal!=0){
                 maxVal = board[i][y].value;
                 visible++;
@@ -69,7 +69,7 @@ public class SGame extends Game {
         visible = 1;
         wanted = constraints[1][y];
         maxVal = board[size-1][y].value;
-        for(int i=size-1;i>=x;i--){
+        for(int i=size-1;i>=0;i--){
             if(board[i][y].value > maxVal && maxVal!=0){
                 maxVal = board[i][y].value;
                 visible++;
@@ -83,7 +83,7 @@ public class SGame extends Game {
         visible = 1;
         wanted = constraints[2][y];
         maxVal = board[x][0].value;
-        for(int i=0;i<=y;i++){
+        for(int i=0;i<size;i++){
             if(board[x][i].value>maxVal && maxVal!=0){
                 maxVal = board[x][i].value;
                 visible++;
@@ -97,7 +97,7 @@ public class SGame extends Game {
         visible = 1;
         wanted = constraints[3][y];
         maxVal = board[x][size-1].value;
-        for(int i=size-1;i>=y;i--){
+        for(int i=size-1;i>=0;i--){
             if(board[x][i].value>maxVal && maxVal!=0){
                 maxVal = board[x][i].value;
                 visible++;
