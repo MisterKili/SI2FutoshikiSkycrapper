@@ -41,11 +41,17 @@ public class FGame extends Game {
             y1 = constraints[i][1];
             x2 = constraints[i][2];
             y2 = constraints[i][3];
+//            System.out.println("x1 " + x1);
+//            System.out.println("y1 " + y1);
+//            System.out.println("x2 " + x2);
+//            System.out.println("y2 " + y2);
+//            System.out.println("x,y " + x+"."+y+", num : "+num);
             if(x1 == x && y1 == y){
-                if(board[x2][y2].getValue() != 0 && num > board[x2][y2].getValue())
+//                System.out.println("x2, y2 get val: " + board[x2][y2].getValue());
+                if(board[x2][y2].getValue() != 0 && num >= board[x2][y2].getValue())
                     return false;
             }else if(x2 == x && y2 == y){
-                if(board[x1][x2].getValue() != 0 && num < board[x1][y1].getValue())
+                if(board[x1][y1].getValue() != 0 && num <= board[x1][y1].getValue())
                     return false;
             }
         }

@@ -7,7 +7,7 @@ public class Main {
 
         Loader loader = new Loader();
         FGame game = loader.readFuto("test_futo_4_0.txt");
-        System.out.println("Futoshiki");
+
         game.printBoard();
         game.printConstraints();
         System.out.println(game.nextNode(0,1).value);
