@@ -69,7 +69,9 @@ public class Node{
         }
         return counter;
     }
-
+    public void initDomain(int s){
+        domain = new int[s];
+    }
     public int getCord_x() {
         return cord_x;
     }

@@ -5,6 +5,6 @@ public abstract class Solver {
     protected long time;
 
 
-    public abstract boolean backtracking(int x, int y);
+    //public abstract boolean backtracking(int x, int y);
 
 }

@@ -20,6 +20,7 @@ public abstract class Game {
 
     public void setInitValue(int val, int i, int j){
         board[i][j] = new Node(val, i, j);
+        board[i][j].initDomain(size);
     }
 
     public Node getNode(int i, int j){
@@ -143,6 +144,17 @@ public abstract class Game {
         }else{
             return board[x][y+1]; //zwraca następny z rzędu
         }
+    }
+
+    public Node getFirstEmpty(){
+        for(int i=0; i<size;i++){
+            for(int j=0; j<size;j++){
+                if(board[i][j].value == 0){
+                    return board[i][j];
+                }
+            }
+        }
+        return null;
     }
 
     public Node nextMostConstrainedNode(int x, int y){

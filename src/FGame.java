@@ -10,8 +10,10 @@ public class FGame extends Game {
         size = other.size;
         board = new Node[size][size];
         for(int i = 0; i< size; i++)
-            for(int j=0; j<size; j++)
+            for(int j=0; j<size; j++) {
                 board[i][j] = new Node(other.board[i][j].getValue(), other.board[i][j].getCord_x(), other.board[i][j].getCord_y());
+                board[i][j].initDomain(size);
+            }
         constraints = other.constraints;
     }
 
