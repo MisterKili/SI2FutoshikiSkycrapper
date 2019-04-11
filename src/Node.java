@@ -58,4 +58,21 @@ public class Node{
         return true;
     }
 
+    public int countDomainSize(){
+        int counter = 0;
+        for (int i=0;i<domain.length;i++){
+            if(domain[i] == 1){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public int getCord_x() {
+        return cord_x;
+    }
+
+    public int getCord_y() {
+        return cord_y;
+    }
 }

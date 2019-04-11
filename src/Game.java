@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import static java.lang.Math.pow;
+
 public abstract class Game {
 
     int size;
@@ -131,14 +133,30 @@ public abstract class Game {
     }
 
     public Node nextNode(int x, int y){
-        if(y<board.length-1){
-            return board[x][y+1];
-        }else if(y==board.length-1 && x<board.length-1){
+        if(y==board.length-1 && x<board.length-1){ //konczy się rząd -> zwraca pierwszy z następnego rzędu
             return board[x+1][0];
         }
-        else if(x == board.length-1 && y == board.length-1){
+        else if(x == board.length-1 && y == board.length-1){ //nie ma następnego -> zwraca null
             return null;
+        }else{
+            return board[x][y+1]; //zwraca następny z rzędu
         }
+    }
+
+    public Node nextMostConstrainedNode(int x, int y){
+        boolean end = false;
+        Node nextOne = nextNode(x, y);
+        int min = nextOne.countDomainSize();
+        int i = 0;
+        int j = 0;
+        for (int k = 0;k<pow(board.length,2)-1;i++){
+            if(nextNode(i,j).countDomainSize() < min && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
+                nextOne = nextNode(i,j);
+                i = nextOne.cord_x;
+                j = nextOne.cord_y;
+            }
+        }
+        return nextOne;
     }
 
     public abstract void printConstraints();
