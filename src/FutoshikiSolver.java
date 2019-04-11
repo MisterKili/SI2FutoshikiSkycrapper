@@ -93,36 +93,4 @@ public class FutoshikiSolver extends Solver{
         return false;
     }
 
-    public boolean backtracking2(int x, int y) {
-        if (board.isComplete()) return false;
-        else {
-            steps++;
-            for (int i = 1; i < board.size + 1; i++) {
-                if (board.check(x, y, i)) {
-                    board.board[x][y].setValue(i);
-                    //board.printBoard();
-                    //System.out.println();
-                    if (board.nextNode(x, y) == null) {
-                        System.out.println("*********** BT SOLVED *************");
-                        System.out.println("IN " + steps + " STEPS");
-                        System.out.println("*********************************** \n");
-                        board.printBoard();
-                        solutions++;
-                        return false;
-                    } else {
-                        int newX = board.nextNode(x, y).getCord_x();
-                        int newY = board.nextNode(x, y).getCord_y();
-                        backtracking2(newX, newY);
-                    }
-                }
-                board.board[x][y].setValue(0);
-            }
-//
-            if(board.isComplete())
-                return true;
-            else
-                return false;
-        }
-
-    }
 }
