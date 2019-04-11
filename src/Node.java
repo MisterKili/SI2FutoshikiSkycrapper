@@ -39,7 +39,9 @@ public class Node{
     public void setValue(int val){
         if(!isConstant) {
             this.value = val;
-            this.isDone = true;
+            if(val == 0){
+                isDone = false;
+            }else isDone = true;
         }
     }
 

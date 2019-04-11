@@ -1,6 +1,7 @@
 public class FutoshikiSolver extends Solver{
     FGame loaded_board;
     FGame board;
+    boolean solved = false;
 
     public FutoshikiSolver(FGame game){
         loaded_board = game;
@@ -8,6 +9,7 @@ public class FutoshikiSolver extends Solver{
         solutions = 0;
         time = 0;
         board = new FGame(loaded_board);
+
     }
 
     public void solve(int option){
@@ -40,12 +42,12 @@ public class FutoshikiSolver extends Solver{
         System.out.println(board.isComplete());
         if(board.isComplete())
             return true;
-        steps++;
+
         for(int num = 1; num <= board.size; num++){
             if(board.check(x, y, num)){
                 if(!board.board[x][y].isConstant) {
                     board.board[x][y].setValue(num);
-
+                    steps++;
                 }
                 if(board.nextNode(x, y) == null)
                     return false;
@@ -108,12 +110,13 @@ public class FutoshikiSolver extends Solver{
     }
 
     public boolean bt(int x, int y){
-        if(board.isComplete()) return true;
+        if(solved) return true;
         else {
+            steps++;
             for (int i = 1; i < board.size + 1; i++) {
                 if (board.check(x, y, i)) {
                     board.board[x][y].setValue(i);
-                    steps++;
+
                     //printBoard(board);
                     if (board.nextNode(x, y) == null) {
                         //finishTime = System.nanoTime();
@@ -121,7 +124,7 @@ public class FutoshikiSolver extends Solver{
                         System.out.println("IN " + steps + " STEPS");
                         System.out.println("*********************************** \n");
                         board.printBoard();
-
+                        solved = true;
                         return true;
                     } else {
                         int nextX = board.nextNode(x, y).getCord_x();
@@ -131,7 +134,7 @@ public class FutoshikiSolver extends Solver{
                 }
                 board.board[x][y].setValue(0);
             }
-            if(board.isComplete())
+            if(solved)
                 return true;
             else
                 return false;

@@ -8,11 +8,14 @@ public class Main {
         Loader loader = new Loader();
         FGame game = loader.readFuto("test_futo_4_0.txt");
 
-        game.printBoard();
-        game.printConstraints();
-        System.out.println(game.nextNode(0,1).value);
+        //game.printBoard();
+        //game.printConstraints();
         FutoshikiSolver f_solver = new FutoshikiSolver(game);
-        f_solver.solve(0);
+        //f_solver.solve(0);
+
+        SGame s_game = loader.readSky("test_sky_4_0.txt");
+        SkyscrapperSolver sky_solver = new SkyscrapperSolver(s_game);
+        sky_solver.solve(0);
 
 
 //        SGame gameSky = loader.readSky("test_sky_4_0.txt");

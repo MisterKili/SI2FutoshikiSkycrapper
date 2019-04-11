@@ -2,6 +2,21 @@ import java.util.ArrayList;
 
 public class SGame extends Game {
 
+    public SGame(){
+
+    }
+
+    public SGame(SGame other){
+        size = other.size;
+        board = new Node[size][size];
+        for(int i = 0; i< size; i++)
+            for(int j=0; j<size; j++) {
+                board[i][j] = new Node(other.board[i][j].getValue(), other.board[i][j].getCord_x(), other.board[i][j].getCord_y());
+                board[i][j].initDomain(size);
+            }
+        constraints = other.constraints;
+    }
+
     public void setSize(int s){
         size = s;
         board = new Node[size][size];

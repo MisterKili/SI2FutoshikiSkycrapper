@@ -163,7 +163,7 @@ public abstract class Game {
         int min = nextOne.countDomainSize();
         int i = 0;
         int j = 0;
-        for (int k = 0;k<pow(board.length,2)-1;i++){
+        for (int k = 0;k<pow(board.length,2)-1; k++){
             if(nextNode(i,j).countDomainSize() < min && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
                 nextOne = nextNode(i,j);
                 i = nextOne.cord_x;
