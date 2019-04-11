@@ -58,6 +58,11 @@ public class Loader {
             }
             game.addConstraints(constraints);
 
+            for (int i = 0; i<dim; i++){
+                for (int j = 0; j<dim; j++){
+                    game.setInitValue(0, i, j);
+                }
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

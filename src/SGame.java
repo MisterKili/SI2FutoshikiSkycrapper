@@ -5,9 +5,9 @@ public class SGame extends Game {
     public void setSize(int s){
         size = s;
         board = new Node[size][size];
-        for(int i = 0; i<size; i++)
+      /*  for(int i = 0; i<size; i++)
             for (int j = 0; j<size; j++)
-                setValue(0, i, j);
+               setValue(0, i, j);*/
     }
 
     @Override
