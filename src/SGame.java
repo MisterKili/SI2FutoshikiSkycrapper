@@ -49,60 +49,64 @@ public class SGame extends Game {
 
     @Override
     public boolean checkConstraints(int x, int y, int num) {
-
+        findNode(x,y).setValue(num);
         //z góry
-        int visible = 0;
+        int visible = 1;
         int wanted = constraints[0][y];
         int maxVal = board[0][y].value;
         for(int i=0;i<=x;i++){
-            if(board[i][y].value>=maxVal){
+            if(board[i][y].value > maxVal){
                 maxVal = board[i][y].value;
                 visible++;
             }
-            if(visible>wanted && wanted!=0){
+            if(wanted!=0 && visible>wanted){
+                findNode(x,y).setValue(num);
                 return false;
             }
         }
         //z dołu
-        visible = 0;
+        visible = 1;
         wanted = constraints[1][y];
         maxVal = board[size-1][y].value;
         for(int i=size-1;i>=x;i--){
-            if(board[i][y].value>=maxVal){
+            if(board[i][y].value>maxVal){
                 maxVal = board[i][y].value;
                 visible++;
             }
             if(visible>wanted && wanted!=0){
+                findNode(x,y).setValue(num);
                 return false;
             }
         }
         //z lewej
-        visible = 0;
+        visible = 1;
         wanted = constraints[2][y];
         maxVal = board[x][0].value;
         for(int i=0;i<=y;i++){
-            if(board[x][i].value>=maxVal){
+            if(board[x][i].value>maxVal){
                 maxVal = board[x][i].value;
                 visible++;
             }
             if(visible>wanted && wanted!=0){
+                findNode(x,y).setValue(num);
                 return false;
             }
         }
         //z prawej
-        visible = 0;
+        visible = 1;
         wanted = constraints[3][y];
         maxVal = board[x][size-1].value;
         for(int i=size-1;i>=y;i--){
-            if(board[x][i].value>=maxVal){
+            if(board[x][i].value>maxVal){
                 maxVal = board[x][i].value;
                 visible++;
             }
             if(visible>wanted && wanted!=0){
+                findNode(x,y).setValue(num);
                 return false;
             }
         }
-
+        findNode(x,y).setValue(num);
         return true;
     }
 }

@@ -56,9 +56,10 @@ public class Node{
     }
 
     public boolean isDomainEmpty(){
-        for(int i = 0; i < domain.length; i++)
-            if(domain[i] == 1)
+        for(int i = 0; i < domain.length; i++) {
+            if (domain[i] == 1)
                 return false;
+        }
         return true;
     }
 
@@ -80,5 +81,9 @@ public class Node{
 
     public int getCord_y() {
         return cord_y;
+    }
+
+    public void printNode(){
+        System.out.println("["+cord_x+","+cord_y+"]: "+value);
     }
 }

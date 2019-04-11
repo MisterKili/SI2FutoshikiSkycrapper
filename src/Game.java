@@ -106,8 +106,8 @@ public abstract class Game {
     }
 
     //TODO: ogarnąć co to robić ma, bo ni uja jeszcze nie wiem
-    public boolean findNode(int x, int y){
-        return true;
+    public Node findNode(int x, int y){
+        return board[x][y];
     }
 
     public void printBoard(){
