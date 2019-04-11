@@ -26,7 +26,8 @@ public abstract class Game {
     }
 
     protected int getIntFromChar(char letter){
-        return letter%65;
+
+        return  letter%65;
     }
 
     public void initDomains(){ //inicjuje puste dziedziny
