@@ -130,6 +130,17 @@ public abstract class Game {
         return true;
     }
 
+    public Node nextNode(int x, int y){
+        if(y<board.length-1){
+            return board[x][y+1];
+        }else if(y==board.length-1 && x<board.length-1){
+            return board[x+1][0];
+        }
+        else if(x == board.length-1 && y == board.length-1){
+            return null;
+        }
+    }
+
     public abstract void printConstraints();
     public abstract void addConstraints(ArrayList<String> cons);
     //TODO: nadpisanie SGame
