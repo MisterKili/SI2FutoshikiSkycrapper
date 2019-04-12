@@ -47,6 +47,69 @@ public class SGame extends Game {
 
     }
 
+    public boolean isDone(){
+
+        for(int help = 0; help<size; help++) {
+            //z góry
+            int visible = 1;
+            int wanted = constraints[0][help];
+            int maxVal = board[0][help].value;
+
+            for (int i = 0; i < size; i++) {
+                if (board[i][help].value > maxVal && maxVal != 0) {
+                    maxVal = board[i][help].value;
+                    visible++;
+                }
+                if (wanted != visible) {
+                    return false;
+                }
+            }
+            //z dołu
+            visible = 1;
+            wanted = constraints[1][help];
+            maxVal = board[size - 1][help].value;
+            for (int i = size - 1; i >= 0; i--) {
+                if (board[i][help].value > maxVal && maxVal != 0) {
+                    maxVal = board[i][help].value;
+                    visible++;
+                }
+                if (wanted != visible) {
+
+                    return false;
+                }
+            }
+            //z lewej
+            visible = 1;
+            wanted = constraints[2][help];
+            maxVal = board[help][0].value;
+            for (int i = 0; i < size; i++) {
+                if (board[help][i].value > maxVal && maxVal != 0) {
+                    maxVal = board[help][i].value;
+                    visible++;
+                }
+                if (wanted != visible) {
+
+                    return false;
+                }
+            }
+            //z prawej
+            visible = 1;
+            wanted = constraints[3][help];
+            maxVal = board[help][size - 1].value;
+            for (int i = size - 1; i >= 0; i--) {
+                if (board[help][i].value > maxVal && maxVal != 0) {
+                    maxVal = board[help][i].value;
+                    visible++;
+                }
+                if (wanted != visible) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     @Override
     public boolean checkConstraints(int x, int y, int num) {
         findNode(x,y).setValue(num);

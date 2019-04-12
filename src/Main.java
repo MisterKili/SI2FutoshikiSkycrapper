@@ -13,7 +13,7 @@ public class Main {
         FutoshikiSolver f_solver = new FutoshikiSolver(game);
         //f_solver.solve(0);
 
-        SGame s_game = loader.readSky("test_sky_4_0.txt");
+        SGame s_game = loader.readSky("test_sky_4_2.txt");
         SkyscrapperSolver sky_solver = new SkyscrapperSolver(s_game);
         sky_solver.solve(0);
 
