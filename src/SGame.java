@@ -20,9 +20,9 @@ public class SGame extends Game {
     public void setSize(int s){
         size = s;
         board = new Node[size][size];
-      /*  for(int i = 0; i<size; i++)
+        /*for(int i = 0; i<size; i++)
             for (int j = 0; j<size; j++)
-               setValue(0, i, j);*/
+               board[i][j].setValue(0);*/
     }
 
     @Override
@@ -157,9 +157,121 @@ public class SGame extends Game {
 //        return true;
 //    }
 
+    private boolean isOK(){
+        if(!checkTop())
+            return false;
+        if(!checkBottom())
+            return false;
+        if(!checkLeft())
+            return false;
+        if(!checkRight())
+            return false;
+        return true;
+    }
+
+    private boolean checkTop(){
+        int [] topConstraints = constraints[0];
+
+        for(int col = 0 ; col<size; col++){
+            int visible = 1;
+            int highest = board[0][col].getValue();
+            int wanted = topConstraints[col];
+            if(wanted!=0){
+                for(int row = 0 ; row < size; row++){
+                    if(board[row][col].getValue()>highest) {
+                        visible++;
+                        highest = board[row][col].getValue();
+                    }
+                }
+                if(visible!=wanted) {
+                    System.out.println("RETURN FALSE top: "+ col);
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
+    private boolean checkBottom(){
+        int [] bottomConstraints = constraints[1];
+
+        for(int col = 0 ; col<size; col++){
+            int visible = 1;
+            int highest = board[size-1][col].getValue();
+            int wanted = bottomConstraints[col];
+            if(wanted!=0){
+                for(int row = size-1 ; row >= 0; row--){
+                    if(board[row][col].getValue()>highest) {
+                        visible++;
+                        highest = board[row][col].getValue();
+                    }
+                }
+                if(visible!=wanted) {
+                    System.out.println("RETURN FALSE bottom: "+ col);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkLeft(){
+        int [] leftConstraints = constraints[2];
+        for(int row = 0; row<size; row ++){
+            int visible = 1;
+            int highest = board[0][row].getValue();
+            int wanted = leftConstraints[row];
+            if(wanted!=0){
+                for(int col = 0; col<size; col++){
+                    if(board[row][col].getValue()>highest){
+                        visible++;
+                        highest = board[row][col].getValue();
+                    }
+                }
+                if(visible!=wanted) {
+                    System.out.println("RETURN FALSE LEFT: "+ row);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkRight(){
+        int [] rightConstraints = constraints[3];
+        for(int row = size-1; row>=0; row ++){
+            int visible = 1;
+            int highest = board[0][row].getValue();
+            int wanted = rightConstraints[row];
+            if(wanted!=0){
+                for(int col = size-1; col>=0; col++){
+                    if(board[row][col].getValue()>highest){
+                        visible++;
+                        highest = board[row][col].getValue();
+                    }
+                }
+                if(visible!=wanted) {
+
+                    System.out.println("RETURN FALSE right: "+ row);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean checkConstraints(int x, int y, int num) {
-        findNode(x,y).setValue(num);
+
+        if(isComplete()){
+            printBoard();
+            return isOK();
+        }
+
+        //to poniżej to jest zmodyfikowane przez Wiktora
+
+       /* findNode(x,y).setValue(num);
 
         //z lewej
         int visible = 1;
@@ -254,7 +366,7 @@ public class SGame extends Game {
         if(counter == size && visible != wanted && wanted != 0) {
             board[x][y].value = 0;
             return false;
-        }
+        }*/
 
 //        printBoard();
 //        System.out.println();
@@ -377,4 +489,35 @@ public class SGame extends Game {
         }
         return true;
     }
+
+    public void printBoard(){
+        System.out.print("-----------------------\n    ");
+        for(int i = 0; i<size; i++){
+            System.out.print(constraints[0][i]+" ");
+        }
+
+        System.out.print("\n    ");
+        for(int i = 0; i<size; i++){
+            System.out.print("- ");
+        }
+        System.out.println();
+        for(int row = 0; row<size; row++){
+            System.out.print(constraints[2][row]+" | ");
+            for(int col = 0; col<size; col++){
+                System.out.print(board[row][col].getValue()+" ");
+            }
+            System.out.println(" | "+constraints[3][row]);
+        }
+        System.out.print("    ");
+        for(int i = 0; i<size; i++){
+            System.out.print("- ");
+        }
+        System.out.print("\n    ");
+        for(int i = 0; i<size; i++){
+            System.out.print(constraints[1][i]+" ");
+        }
+        System.out.println("\n-----------------------");
+
+    }
+
 }

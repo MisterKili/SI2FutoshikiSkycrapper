@@ -28,10 +28,11 @@ public class SkyscrapperSolver extends Solver {
 //                System.out.println("-------------------------");
 //
 //            }
-            if(bt(0,0)) {
+            if(backtracking2(0,0)) {
                 System.out.println("--------Solved bt--------");
                 System.out.println("In " + steps + " steps");
                 System.out.println("-------------------------");
+                board.printBoard();
 
             }
     }
@@ -43,15 +44,16 @@ public class SkyscrapperSolver extends Solver {
             for (int i = 1; i < board.size + 1; i++) {
                 if (board.check(x, y, i)) {
                     board.board[x][y].setValue(i);
-                    //printBoard(board);
+                    System.out.println("----------------");
+                    board.printBoard();
                     if (board.nextNode(x, y) == null) {
-                        //finishTime = System.nanoTime();
-                        System.out.println("*********** SKY SOLVED *************");
-                        System.out.println("IN " + steps + " STEPS");
-                        System.out.println("*********************************** \n");
-                        board.printBoard();
-                        solved = true;
-                        return true;
+                            //finishTime = System.nanoTime();
+                            System.out.println("*********** SKY SOLVED *************");
+                            System.out.println("IN " + steps + " STEPS");
+                            System.out.println("*********************************** \n");
+                            board.printBoard();
+                            solved = true;
+                            return true;
                     } else {
                         int nextX = board.nextNode(x, y).getCord_x();
                         int nextY = board.nextNode(x, y).getCord_y();
@@ -109,4 +111,52 @@ public class SkyscrapperSolver extends Solver {
         }
         return false;
     }
+
+    public boolean backtracking2(int row, int col){
+        for(int i=1;i<board.size+1;i++){
+            //todo val = heuristicsGetVal(board,row,col)
+            int val = i;
+            if(board.check(row,col,i)) {
+                board.board[row][col].value = i;
+                System.out.println("["+row+" "+col+"]");
+                if(board.check(row,col,i)) {
+                    steps++;
+                    System.out.println("val accepted: row: "+row+" col: "+col+" num: "+i);
+//                    board.printBoard();
+//                    System.out.println("******");
+                    if (board.nextNode(row, col) == null) {
+                        //no empty field was found -> we found the solution
+                        System.out.println("*********** BT SOLVED *************");
+                        System.out.println("IN " + steps + " STEPS");
+                        System.out.println("*********************************** \n");
+                        board.printBoard();
+//                    return true;
+                        board.board[row][col].value = 0;
+                    } else {
+                        int nextX = board.nextNode(row, col).getCord_x();
+                        int nextY = board.nextNode(row, col).getCord_y();
+                        boolean correct = backtracking2(nextX, nextY);
+                        //going back
+                        if (!correct) {
+                        System.out.println("incorrect");
+                            board.board[row][col].value = 0;
+                        }
+                    }
+                }
+                else {
+                    System.out.println("broke constraint");
+                    board.board[row][col].value = 0;
+                }
+            }
+            else{
+                // no unassigned value left
+//                System.out.println("alreadyAssignedValue ["+row+" "+col+"] "+i);
+//                board[row][col].value = 0;
+//                if(i==board.length) return false;
+            }
+            board.board[row][col].value = 0;
+        }
+        return true;
+    }
+
 }
