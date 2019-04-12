@@ -66,4 +66,47 @@ public class SkyscrapperSolver extends Solver {
                 return false;
         }
     }
+
+    public void zrobTestIDrukuj(){
+        if(sprawdzTest())
+            board.printBoard();
+        else
+            System.out.println("Lipa jakas");
+
+    }
+
+    public boolean sprawdzTest(){
+        int row = -1;
+        int col = -1;
+        boolean isEmpty = true;
+        for (int i = 0; i < board.size; i++) {
+            for (int j = 0; j < board.size; j++) {
+                if (board.board[i][j].getValue() == 0) {
+                    row = i;
+                    col = j;
+
+                    isEmpty = false;
+                    break;
+                }
+            }
+            if (!isEmpty) {
+                break;
+            }
+        }
+        if (isEmpty) {
+            return true;
+        }
+        for (int num = 1; num <= board.size; num++) {
+            if (board.check(row, col, num)) {
+                board.board[row][col].setValue(num);
+                if (sprawdzTest()) {
+//                    System.out.println(1);
+                    return true;
+                } else {
+                    board.board[row][col].setValue(0);
+                }
+            }
+        }
+        return false;
+    }
 }
