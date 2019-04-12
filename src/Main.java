@@ -18,7 +18,7 @@ public class Main {
 //        sky_solver.solve(0);
 
 
-       SGame gameSky = loader.readSky("test_sky_4_1.txt");
+       SGame gameSky = loader.readSky("test_sky_4_0.txt");
        System.out.println("Skyscrapper");
        SkyscrapperSolver solver = new SkyscrapperSolver(gameSky);
 //       System.out.println(solver.sprawdzTest());
