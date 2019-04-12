@@ -220,11 +220,12 @@ public class SGame extends Game {
         int [] leftConstraints = constraints[2];
         for(int row = 0; row<size; row ++){
             int visible = 1;
-            int highest = board[0][row].getValue();
+            int highest = board[row][0].getValue();
             int wanted = leftConstraints[row];
             if(wanted!=0){
                 for(int col = 0; col<size; col++){
                     if(board[row][col].getValue()>highest){
+                        System.out.println("value node: "+board[row][col] + " highest: "+highest);
                         visible++;
                         highest = board[row][col].getValue();
                     }
@@ -240,12 +241,12 @@ public class SGame extends Game {
 
     private boolean checkRight(){
         int [] rightConstraints = constraints[3];
-        for(int row = size-1; row>=0; row ++){
+        for(int row = 0; row<size; row ++){
             int visible = 1;
-            int highest = board[0][row].getValue();
+            int highest = board[row][size-1].getValue();
             int wanted = rightConstraints[row];
             if(wanted!=0){
-                for(int col = size-1; col>=0; col++){
+                for(int col = size-1; col>=0; col--){
                     if(board[row][col].getValue()>highest){
                         visible++;
                         highest = board[row][col].getValue();
@@ -268,10 +269,9 @@ public class SGame extends Game {
             printBoard();
             return isOK();
         }
-
         //to poniżej to jest zmodyfikowane przez Wiktora
 
-       /* findNode(x,y).setValue(num);
+/*        findNode(x,y).setValue(num);
 
         //z lewej
         int visible = 1;
