@@ -105,6 +105,16 @@ public abstract class Game {
         return true;
     }
 
+    public int countNotCompleted(){
+        int counter = 0;
+        for(int i =0; i<size; i++)
+            for(int j=0; j<size; j++)
+                if (board[i][j].getValue()==0)
+                    counter++;
+
+        return counter;
+    }
+
     //TODO: ogarnąć co to robić ma, bo ni uja jeszcze nie wiem
     public Node findNode(int x, int y){
         return board[x][y];
@@ -159,17 +169,67 @@ public abstract class Game {
 
     //TODO: najbardziej i najmnirj ograniczony
 
-
-    //TODO: heurystyka wyboru kolejnej zmiennej
-
-    public Node nextMostConstrainedNode(int x, int y){
-        boolean end = false;
-        Node nextOne = nextNode(x, y);
+    public Node mostConstrainedNode(){
+        Node nextOne = getFirstEmpty();
         int min = nextOne.countDomainSize();
         int i = 0;
         int j = 0;
         for (int k = 0;k<pow(board.length,2)-1; k++){
             if(nextNode(i,j).countDomainSize() < min && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
+                nextOne = nextNode(i,j);
+                i = nextOne.cord_x;
+                j = nextOne.cord_y;
+            }
+        }
+        return nextOne;
+    }
+
+    public Node leastConstrainedNode(){
+        Node nextOne = getFirstEmpty();
+        int max = nextOne.countDomainSize();
+        int i = 0;
+        int j = 0;
+        for (int k = 0;k<pow(board.length,2)-1; k++){
+            if(nextNode(i,j).countDomainSize() > max && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
+                nextOne = nextNode(i,j);
+                i = nextOne.cord_x;
+                j = nextOne.cord_y;
+            }
+        }
+        return nextOne;
+    }
+
+
+    //TODO: heurystyka wyboru kolejnej zmiennej
+
+    public Node nextMostConstrainedNode(int x, int y){
+        if(isComplete()){
+            return null;
+        }
+        Node nextOne = getFirstEmpty();
+        int min = nextOne.countDomainSize();
+        int i = 0;
+        int j = 0;
+        for (int k = 0;k<pow(board.length,2)-1; k++){
+            if(nextNode(i,j).countDomainSize() < min && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
+                nextOne = nextNode(i,j);
+                i = nextOne.cord_x;
+                j = nextOne.cord_y;
+            }
+        }
+        return nextOne;
+    }
+
+    public Node nextLeastConstrainedNode(int x, int y){
+        if(isComplete()){
+            return null;
+        }
+        Node nextOne = getFirstEmpty();
+        int max = nextOne.countDomainSize();
+        int i = 0;
+        int j = 0;
+        for (int k = 0;k<pow(board.length,2)-1; k++){
+            if(nextNode(i,j).countDomainSize() > max && !nextNode(i,j).isDone && !nextNode(i,j).isConstant){
                 nextOne = nextNode(i,j);
                 i = nextOne.cord_x;
                 j = nextOne.cord_y;

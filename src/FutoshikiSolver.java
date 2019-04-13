@@ -13,7 +13,7 @@ public class FutoshikiSolver extends Solver{
     }
 
     public void solve(int option){
-        if(option == 0)
+        if(option == 0) {
 
 //            if(backtracking(0,0)) {
 //                System.out.println("--------Solved bt--------");
@@ -28,12 +28,14 @@ public class FutoshikiSolver extends Solver{
 //                System.out.println("-------------------------");
 //
 //            }
-            if(bt(0,0)) {
+            Node start = board.mostConstrainedNode();
+            if (bt(start.cord_x, start.cord_y)) {
                 System.out.println("--------Solved bt--------");
                 System.out.println("In " + steps + " steps");
                 System.out.println("-------------------------");
 
             }
+        }
     }
 
     public boolean backtracking(int x, int y){
@@ -118,7 +120,7 @@ public class FutoshikiSolver extends Solver{
                     board.board[x][y].setValue(i);
 
                     //printBoard(board);
-                    if (board.nextNode(x, y) == null) {
+                    if (board.nextMostConstrainedNode(x, y) == null) {
                         //finishTime = System.nanoTime();
                         System.out.println("*********** BT SOLVED *************");
                         System.out.println("IN " + steps + " STEPS");
@@ -127,8 +129,8 @@ public class FutoshikiSolver extends Solver{
                         solved = true;
                         return true;
                     } else {
-                        int nextX = board.nextNode(x, y).getCord_x();
-                        int nextY = board.nextNode(x, y).getCord_y();
+                        int nextX = board.nextMostConstrainedNode(x, y).getCord_x();
+                        int nextY = board.nextMostConstrainedNode(x, y).getCord_y();
                         bt(nextX, nextY);
                     }
                 }
