@@ -44,7 +44,7 @@ public class SGame extends Game {
 
     }
 
-    private boolean isOK(){
+    public boolean isOK(){
         if(!checkTop())
             return false;
         if(!checkBottom())
@@ -156,6 +156,101 @@ public class SGame extends Game {
         return true;
     }
 
+    public boolean calculateDomains(){
+        for (int i=0; i<size; i++){
+            for (int j = 0; j<size; j++){
+                for (int k = 0; k<size; k++)
+                    board[i][j].domain[k] = 0;
+                for(int num = 1; num <=size; num++){ //nie wiem czy przy wyszukiwaniu wszystkich rozwiązań, nie trzeba będzie zmodyfikować, ale na razie zostawiam
+                    if(board[i][j].getValue() == 0 && checkForward(i, j, num)){
+                        printBoard();
+                        printDomains();
+                        board[i][j].domain[num-1] = 1;
+                    }
+                    if(board[i][j].getValue() !=0)
+                        board[i][j].domain[board[i][j].getValue()-1] = 1;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkForward(int row, int col, int val){
+        System.out.println("checking roward: row|col|val"+row+"\t"+col+"\t"+val);
+        //z góry
+        int wanted = constraints[0][col];
+        int visibleBefore = 1;
+        int visibleAfter = size - val;
+        int highest = board[0][col].getValue();
+        if(wanted!=0){
+            for(int x = 0; x < row; x++){
+                if(board[x][col].getValue()>highest){
+                    visibleBefore++;
+                    highest = board[x][col].getValue();
+                }
+            }
+            int visible = visibleBefore + visibleAfter;
+            if(visible<wanted){
+                return false;
+            }
+        }
+        //z dołu
+        wanted = constraints[1][col];
+        visibleBefore = 1;
+        visibleAfter = size - val;
+        highest = board[size- 1][col].getValue();
+        if(wanted!=0){
+            for(int x = size-1; x>row; x--){
+                if(board[x][col].getValue()>highest){
+                    visibleBefore++;
+                    highest = board[x][col].getValue();
+                }
+            }
+            int visible = visibleBefore + visibleAfter;
+            if(visible<wanted){
+                return false;
+            }
+        }
+
+        //z lewej
+        wanted = constraints[2][row];
+        visibleBefore = 1;
+        visibleAfter = size - val;
+        highest = board[row][0].getValue();
+        if(wanted!=0){
+            for(int x = 0; x<col; x++){
+                if(board[row][x].getValue()>highest){
+                    visibleBefore++;
+                    highest = board[row][x].getValue();
+                }
+            }
+            int visible = visibleBefore + visibleAfter;
+            if(visible<wanted){
+                return false;
+            }
+        }
+
+        //z prawej
+        wanted = constraints[3][row];
+        visibleBefore = 1;
+        visibleAfter = size - val;
+        highest = board[row][size-1].getValue();
+        if(wanted!=0){
+            for(int x = size-1; x>col; x--){
+                if(board[row][x].getValue()>highest){
+                    visibleBefore++;
+                    highest = board[row][x].getValue();
+                }
+            }
+            int visible = visibleBefore + visibleAfter;
+            if(visible<wanted){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void printBoard(){
         System.out.print("-----------------------\n    ");
         for(int i = 0; i<size; i++){
@@ -184,4 +279,18 @@ public class SGame extends Game {
         }
         System.out.println("\n-----------------------");
     }
+
+    public boolean removeFromDomain(int row, int col, int val){
+        if(board[row][col].domain[val-1]==0)
+            return false;
+        else{
+            board[row][col].domain[val-1] = 0;
+            return true;
+        }
+    }
+
+    public boolean checkForward(int row, int col){
+        return true;
+    }
+
 }

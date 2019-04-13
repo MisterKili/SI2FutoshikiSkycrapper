@@ -60,6 +60,8 @@ public abstract class Game {
         return true;
     }
 
+
+
     public boolean recalculateCross(int x, int y){
         for(int i = 0; i<size; i++){
             for(int k=0; k<size; k++){
@@ -128,6 +130,17 @@ public abstract class Game {
             System.out.println();
         }
     }
+
+    public void printDomains(){
+        for (int i=0; i<size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.println(" x: "+i+" y: "+j +" " );
+                for (int k = 0; k < size; k++)
+                System.out.print(board[i][j].domain[k] + " ");
+                System.out.println();
+                }
+            }
+        }
 
     public boolean check(int x, int y, int num){ //metoda wywołuje checkConstarints i checkCross, true jeśli można wpisąć liczbę
         if(board[x][y].isConstant)
