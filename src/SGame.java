@@ -163,8 +163,8 @@ public class SGame extends Game {
                     board[i][j].domain[k] = 0;
                 for(int num = 1; num <=size; num++){ //nie wiem czy przy wyszukiwaniu wszystkich rozwiązań, nie trzeba będzie zmodyfikować, ale na razie zostawiam
                     if(board[i][j].getValue() == 0 && checkForward(i, j, num)){
-                        printBoard();
-                        printDomains();
+//                        printBoard();
+//                        printDomains();
                         board[i][j].domain[num-1] = 1;
                     }
                     if(board[i][j].getValue() !=0)
@@ -176,14 +176,14 @@ public class SGame extends Game {
     }
 
     public boolean checkForward(int row, int col, int val){
-        System.out.println("checking roward: row|col|val"+row+"\t"+col+"\t"+val);
+//        System.out.println("checking roward: row|col|val"+row+"\t"+col+"\t"+val);
         //z góry
         int wanted = constraints[0][col];
         int visibleBefore = 1;
         int visibleAfter = size - val;
         int highest = board[0][col].getValue();
         if(wanted!=0){
-            for(int x = 0; x < row; x++){
+            for(int x = 0; x <= row; x++){
                 if(board[x][col].getValue()>highest){
                     visibleBefore++;
                     highest = board[x][col].getValue();
@@ -200,7 +200,7 @@ public class SGame extends Game {
         visibleAfter = size - val;
         highest = board[size- 1][col].getValue();
         if(wanted!=0){
-            for(int x = size-1; x>row; x--){
+            for(int x = size-1; x>=row; x--){
                 if(board[x][col].getValue()>highest){
                     visibleBefore++;
                     highest = board[x][col].getValue();
@@ -218,7 +218,7 @@ public class SGame extends Game {
         visibleAfter = size - val;
         highest = board[row][0].getValue();
         if(wanted!=0){
-            for(int x = 0; x<col; x++){
+            for(int x = 0; x<=col; x++){
                 if(board[row][x].getValue()>highest){
                     visibleBefore++;
                     highest = board[row][x].getValue();
@@ -236,7 +236,7 @@ public class SGame extends Game {
         visibleAfter = size - val;
         highest = board[row][size-1].getValue();
         if(wanted!=0){
-            for(int x = size-1; x>col; x--){
+            for(int x = size-1; x>=col; x--){
                 if(board[row][x].getValue()>highest){
                     visibleBefore++;
                     highest = board[row][x].getValue();
