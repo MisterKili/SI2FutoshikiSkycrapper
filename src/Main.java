@@ -25,6 +25,6 @@ public class Main {
 //        solver.zrobTestIDrukuj();
         solver.solve(0);
 //       gameSky.printBoard();
-       gameSky.printConstraints();
+//       gameSky.printConstraints();
     }
 }

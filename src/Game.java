@@ -157,6 +157,11 @@ public abstract class Game {
         return null;
     }
 
+    //TODO: najbardziej i najmnirj ograniczony
+
+
+    //TODO: heurystyka wyboru kolejnej zmiennej
+
     public Node nextMostConstrainedNode(int x, int y){
         boolean end = false;
         Node nextOne = nextNode(x, y);
@@ -181,8 +186,8 @@ public abstract class Game {
         initDomains();
     }
 
+
     public abstract void printConstraints();
     public abstract void addConstraints(ArrayList<String> cons);
-    //TODO: nadpisanie SGame
     public abstract boolean checkConstraints(int x, int y, int num); //musi być nadpisane w kazdej z gier osobno, true jeśli liczba nie łamie ograniczeń
 }
