@@ -29,10 +29,10 @@ public class SkyscrapperSolver extends Solver {
 //
 //            }
             if(backtracking2(0,0)) {
-                System.out.println("--------Solved bt--------");
-                System.out.println("In " + steps + " steps");
-                System.out.println("-------------------------");
-                board.printBoard();
+//                System.out.println("--------Solved bt--------");
+//                System.out.println("In " + steps + " steps");
+//                System.out.println("-------------------------");
+//                board.printBoard();
 
             }
     }
@@ -118,10 +118,10 @@ public class SkyscrapperSolver extends Solver {
             int val = i;
             if(board.check(row,col,i)) {
                 board.board[row][col].value = i;
-                System.out.println("["+row+" "+col+"]");
+//                System.out.println("["+row+" "+col+"]");
                 if(board.check(row,col,i)) {
                     steps++;
-                    System.out.println("val accepted: row: "+row+" col: "+col+" num: "+i);
+//                    System.out.println("val accepted: row: "+row+" col: "+col+" num: "+i);
 //                    board.printBoard();
 //                    System.out.println("******");
                     if (board.nextNode(row, col) == null) {
@@ -138,13 +138,13 @@ public class SkyscrapperSolver extends Solver {
                         boolean correct = backtracking2(nextX, nextY);
                         //going back
                         if (!correct) {
-                        System.out.println("incorrect");
+//                        System.out.println("incorrect");
                             board.board[row][col].value = 0;
                         }
                     }
                 }
                 else {
-                    System.out.println("broke constraint");
+//                    System.out.println("broke constraint");
                     board.board[row][col].value = 0;
                 }
             }

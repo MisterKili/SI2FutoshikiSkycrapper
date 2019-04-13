@@ -184,7 +184,7 @@ public class SGame extends Game {
                     }
                 }
                 if(visible!=wanted) {
-                    System.out.println("RETURN FALSE top: "+ col);
+//                    System.out.println("RETURN FALSE top: "+ col);
                     return false;
                 }
             }
@@ -208,7 +208,7 @@ public class SGame extends Game {
                     }
                 }
                 if(visible!=wanted) {
-                    System.out.println("RETURN FALSE bottom: "+ col);
+//                    System.out.println("RETURN FALSE bottom: "+ col);
                     return false;
                 }
             }
@@ -225,13 +225,12 @@ public class SGame extends Game {
             if(wanted!=0){
                 for(int col = 0; col<size; col++){
                     if(board[row][col].getValue()>highest){
-                        System.out.println("value node: "+board[row][col] + " highest: "+highest);
                         visible++;
                         highest = board[row][col].getValue();
                     }
                 }
                 if(visible!=wanted) {
-                    System.out.println("RETURN FALSE LEFT: "+ row);
+//                    System.out.println("RETURN FALSE LEFT: "+ row);
                     return false;
                 }
             }
@@ -254,7 +253,7 @@ public class SGame extends Game {
                 }
                 if(visible!=wanted) {
 
-                    System.out.println("RETURN FALSE right: "+ row);
+//                    System.out.println("RETURN FALSE right: "+ row);
                     return false;
                 }
             }
@@ -266,7 +265,7 @@ public class SGame extends Game {
     public boolean checkConstraints(int x, int y, int num) {
 
         if(isComplete()){
-            printBoard();
+//            printBoard();
             return isOK();
         }
         //to poniżej to jest zmodyfikowane przez Wiktora
