@@ -15,7 +15,7 @@ public class SkyscrapperSolver extends Solver {
     public void solve(int option){
         if(option == 0)
 
-           if(forwardChecking(0,0)) {
+           if(backtracking(0,0)) {
 //                board.printBoard();
             }
         //TODO: wybór algorytmu i heurystyki
@@ -65,12 +65,14 @@ public class SkyscrapperSolver extends Solver {
             //todo val = heuristicsGetVal(board,row,col)
             int val = i;
 //            System.out.println("checking: "+ board.check(row,col,i));
+            board.printBoard();
             if(board.check(row,col,i)) {
 //                System.out.println("inside");
                 board.calculateDomains();
 //                System.out.println("befoere");
 //                board.printDomains();
-
+                board.printBoard();
+                System.out.println("-------------- yyyyyyyyyyyyyy ------------ -----------");
                 board.board[row][col].value = i;
                 board.calculateDomains();
                 boolean checkDomains = true;
@@ -95,7 +97,7 @@ public class SkyscrapperSolver extends Solver {
                     } else {
                         int nextX = board.nextNode(row, col).getCord_x();
                         int nextY = board.nextNode(row, col).getCord_y();
-                        boolean correct = backtracking(nextX, nextY);
+                        boolean correct = forwardChecking(nextX, nextY);
                         //going back
                         if (!correct) {
                             board.board[row][col].value = 0;
