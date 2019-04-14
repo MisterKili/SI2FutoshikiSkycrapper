@@ -8,12 +8,10 @@ public class Main {
         Loader loader = new Loader();
         FGame game = loader.readFuto("test_futo_4_0.txt");
 
-        //game.printBoard();
-        //game.printConstraints();
-//        FutoshikiSolver f_solver = new FutoshikiSolver(game);
-//        f_solver.solve(0);
-//        f_solver.forwardChecking(0, 0);
-//        game.printBoard();
+        game.printBoard();
+        game.printConstraints();
+        FutoshikiSolver f_solver = new FutoshikiSolver(game);
+        f_solver.solve(0);
 
 //        SGame s_game = loader.readSky("test_sky_4_0.txt");
 //        SkyscrapperSolver sky_solver = new SkyscrapperSolver(s_game);
@@ -21,19 +19,12 @@ public class Main {
 
 
        SGame gameSky = loader.readSky("test_sky_4_0.txt");
-//       System.out.println("Skyscrapper");
+       System.out.println("Skyscrapper");
        SkyscrapperSolver solver = new SkyscrapperSolver(gameSky);
-       solver.fillConstantValues();
-       solver.board.printBoard();
 //       System.out.println(solver.sprawdzTest());
 //        solver.zrobTestIDrukuj();
-//        solver.solve(0);
-//        solver.backtracking(0, 0);
-        solver.forwardChecking(0, 0);
-
-//        solver.forwardChecking(0, 0);
+        solver.solve(0);
 //       gameSky.printBoard();
-
 //       gameSky.printConstraints();
     }
 }

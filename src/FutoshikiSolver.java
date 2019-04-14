@@ -29,8 +29,8 @@ public class FutoshikiSolver extends Solver{
 //
 //            }
             Node start = board.mostConstrainedNode();
-            if (bt(start.cord_x, start.cord_y)) {
-                System.out.println("--------Solved bt--------");
+            if (forwardChecking(start.cord_x, start.cord_y)) {
+                System.out.println("--------Solved f--------");
                 System.out.println("In " + steps + " steps");
                 System.out.println("-------------------------");
 
