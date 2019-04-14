@@ -142,5 +142,4 @@ public class FutoshikiSolver extends Solver{
                 return false;
         }
     }
-
 }

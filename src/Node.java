@@ -86,4 +86,13 @@ public class Node{
     public void printNode(){
         System.out.println("["+cord_x+","+cord_y+"]: "+value);
     }
+
+    public int getFirstValueFromDomain(){
+        for(int i = 0; i<domain.length; i++){
+            if(domain[i] != 0){
+                return i+1;
+            }
+        }
+        return 0;
+    }
 }
