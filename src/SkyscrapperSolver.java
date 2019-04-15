@@ -3,31 +3,67 @@ public class SkyscrapperSolver extends Solver {
     SGame board;
     boolean solved = false;
 
+
     public SkyscrapperSolver(SGame game){
         loaded_board = game;
         steps = 0;
         solutions = 0;
         time = 0;
-        board = new SGame(loaded_board);
-
     }
 
-    public void solve(int option){
+    public void solve(int option, int heuristic){
+        this.heuristic = heuristic;
         if(option == 0)
-
-           if(forwardChecking(0,0)) {
-//                board.printBoard();
-            }
-        //TODO: wybór algorytmu i heurystyki
+            startBT();
+        if(option == 1)
+            startFC();
+        if(option == 2)
+            startBTwithFirst();
+        if(option == 3)
+            startFCwithFirst();
     }
 
-    public boolean backtracking(int row, int col){
+    private void startBT(){
+        steps = 0;
+        board = new SGame(loaded_board);
+        setStart();
+        System.out.println("Solving Skyscprapper - backtracking");
+        backtracking(startX,startY, heuristic);
+    }
+
+    private void startFC(){
+        steps = 0;
+        board = new SGame(loaded_board);
+        setStart();
+        System.out.println("Solving Skyscprapper - forward checking");
+        forwardChecking(startX,startY, heuristic);
+    }
+
+    private void startBTwithFirst(){
+        steps = 0;
+        setStart();
+        board = new SGame(loaded_board);
+        fillConstantValues();
+        System.out.println("Solving Skyscprapper - backtracking with filled first values");
+        backtracking(startX,startY, heuristic);
+    }
+
+    private void startFCwithFirst(){
+        steps = 0;
+        board = new SGame(loaded_board);
+        fillConstantValues();
+        setStart();
+        System.out.println("Solving Skyscprapper - forward checking with filled first values");
+        forwardChecking(startX,startY, heuristic);
+    }
+
+    public boolean backtracking(int row, int col, int option){
 //        System.out.println("step: "+steps);
 //        board.printBoard();
         if(board.board[row][col].isConstant){
-            int nextX = board.nextNode(row, col).getCord_x();
-            int nextY = board.nextNode(row, col).getCord_y();
-            boolean correct = backtracking(nextX, nextY);
+            int nextX = board.getNext(row, col, option).getCord_x();
+            int nextY = board.getNext(row, col, option).getCord_y();
+            boolean correct = backtracking(nextX, nextY, option);
             //going back
             if (!correct) {
                 board.board[row][col].setValue(0);
@@ -46,12 +82,11 @@ public class SkyscrapperSolver extends Solver {
                             System.out.println("*********** BT SOLVED *************");
                             System.out.println("IN " + steps + " STEPS");
                             System.out.println("*********************************** \n");
-
                             board.board[row][col].setValue(0);
                         } else {
-                            int nextX = board.nextNode(row, col).getCord_x();
-                            int nextY = board.nextNode(row, col).getCord_y();
-                            boolean correct = backtracking(nextX, nextY);
+                            int nextX = board.getNext(row, col, option).getCord_x();
+                            int nextY = board.getNext(row, col, option).getCord_y();
+                            boolean correct = backtracking(nextX, nextY, option);
                             //going back
                             if (!correct) {
                                 board.board[row][col].setValue(0);
@@ -67,13 +102,15 @@ public class SkyscrapperSolver extends Solver {
         return true;
     }
 
+
+
     //TODO: forward
 
-    public boolean forwardChecking(int row, int col){
+    public boolean forwardChecking(int row, int col, int option){
         if(board.board[row][col].isConstant){
-            int nextX = board.nextNode(row, col).getCord_x();
-            int nextY = board.nextNode(row, col).getCord_y();
-            boolean correct = forwardChecking(nextX, nextY);
+            int nextX = board.getNext(row, col, option).getCord_x();
+            int nextY = board.getNext(row, col, option).getCord_y();
+            boolean correct = forwardChecking(nextX, nextY, option);
             //going back
             if (!correct) {
                 board.board[row][col].setValue(0);
@@ -82,19 +119,11 @@ public class SkyscrapperSolver extends Solver {
             for (int i = 1; i < board.size + 1; i++) {
                 //todo val = heuristicsGetVal(board,row,col)
                 int val = i;
-//            System.out.println("checking: "+ board.check(row,col,i));
-//            board.printBoard();
                 if (board.check(row, col, val)) {
-//                System.out.println("inside");
-                    board.calculateDomains();
-//                System.out.println("befoere");
-//                board.printDomains();
-//                board.printBoard();
+//                    board.calculateDomains();
                     board.board[row][col].setValue(i);
                     board.calculateDomains();
                     boolean checkDomains = true;
-//                System.out.println("after");
-//                board.printDomains();
                     for (int j = 0; j < board.size && checkDomains; j++) {
 
                         if (board.isDomainEmpty(j, col) || board.isDomainEmpty(row, j))
@@ -112,9 +141,9 @@ public class SkyscrapperSolver extends Solver {
 
                             board.board[row][col].setValue(0);
                         } else {
-                            int nextX = board.nextNode(row, col).getCord_x();
-                            int nextY = board.nextNode(row, col).getCord_y();
-                            boolean correct = forwardChecking(nextX, nextY);
+                            int nextX = board.getNext(row, col, option).getCord_x();
+                            int nextY = board.getNext(row, col, option).getCord_y();
+                            boolean correct = forwardChecking(nextX, nextY, option);
                             //going back
                             if (!correct) {
                                 board.board[row][col].setValue(0);
@@ -133,7 +162,7 @@ public class SkyscrapperSolver extends Solver {
     public void fillConstantValues(){
         for(int i = 0; i<board.size; i++){
             for(int j = 0; j<board.size; j++){
-                if(board.constraints[i][j] == 4){
+                if(board.constraints[i][j] == board.size){
                     if(i == 0){
                         fillColumnAsc(j);
                     }
@@ -201,4 +230,22 @@ public class SkyscrapperSolver extends Solver {
             board.board[row][i].isConstant = true;
         }
     }
+
+    private void setStart(){
+        if(heuristic == 0){
+            startX = 0;
+            startY = 0;
+        }
+        if(heuristic == 1){
+            Node start = board.mostConstrainedNode();
+            startX = start.cord_x;
+            startY = start.cord_y;
+        }
+        if(heuristic == 2){
+            Node start = board.leastConstrainedNode();
+            startX = start.cord_x;
+            startY = start.cord_y;
+        }
+    }
+
 }
