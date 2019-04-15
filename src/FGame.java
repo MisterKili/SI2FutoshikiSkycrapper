@@ -65,4 +65,45 @@ public class FGame extends Game {
             System.out.println(constraints[i][0] + "\t" + constraints[i][1] + "\t" + constraints[i][2] + "\t" + constraints[i][3]);
         }
     }
+
+    @Override
+    public void printBoard(){
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j<size; j++){
+                System.out.print(board[i][j].getValue()+"\t");
+                if(checkBetween(i, j, i, j+1)==0){
+                    System.out.print("\t");
+                }
+                if(checkBetween(i, j, i, j+1)==-1){
+                    System.out.print("<\t");
+                }
+                if(checkBetween(i, j, i, j+1)==1){
+                    System.out.print(">\t");
+                }
+            }
+            System.out.print("\n");
+            for(int j =0; j<size; j++){
+
+                if(checkBetween(i, j, i+1, j)==0)
+                    System.out.print("\t");
+                if(checkBetween(i, j, i+1, j)==1)
+                    System.out.print("\\/\t");
+                if(checkBetween(i, j, i+1, j)==-1)
+                    System.out.print("/\\\t");
+                System.out.print("\t");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    private int checkBetween(int x1, int y1, int x2, int y2){
+        int result = 0;
+        for(int k = 0; k<constraints.length && result==0; k++){
+            if(constraints[k][0] == x1 && constraints[k][1] == y1 && constraints[k][2] == x2 && constraints[k][3] == y2)
+                result = -1;
+            if(constraints[k][2] == x1 && constraints[k][3] == y1 && constraints[k][0] == x2 && constraints[k][1] == y2)
+                result = 1;
+        }
+        return result;
+    }
 }

@@ -1,30 +1,54 @@
 public class Main {
 
     public static void main(String[] args) {
-//        Loader loader = new Loader();
-//        String path = "D:\\Dokumenty\\PWR\\Semestr VI\\SI\\Lab2\\ai-lab2-data\\test_futo_4_0.txt";
-//        loader.loadFutoshiki(path);
 
         Loader loader = new Loader();
-        FGame game = loader.readFuto("test_futo_4_0.txt");
 
-        game.printBoard();
-        game.printConstraints();
-        FutoshikiSolver f_solver = new FutoshikiSolver(game);
-        f_solver.solve(0);
+        /*
+        *
+        * Futoshiki
+        *
+        * option:
+        *           0 - BT
+        *           1 - FC
+        *
+        * heuristic:
+        *           0 - bez
+        *           1 - najbardziej ograniczona zmienna
+        *           2 - najmniej ograniczona zmienna
+        * */
 
-//        SGame s_game = loader.readSky("test_sky_4_0.txt");
-//        SkyscrapperSolver sky_solver = new SkyscrapperSolver(s_game);
-//        sky_solver.solve(0);
+        FGame futoshiki_game = loader.readFuto("test_futo_4_0.txt");
+
+        FutoshikiSolver futoshiki_solver = new FutoshikiSolver(futoshiki_game);
+
+        futoshiki_solver.solve(0, 0);
+        futoshiki_solver.solve(0, 1);
+        futoshiki_solver.solve(0, 2);
 
 
-       SGame gameSky = loader.readSky("test_sky_4_0.txt");
-       System.out.println("Skyscrapper");
-       SkyscrapperSolver solver = new SkyscrapperSolver(gameSky);
-//       System.out.println(solver.sprawdzTest());
-//        solver.zrobTestIDrukuj();
-        solver.solve(0);
-//       gameSky.printBoard();
-//       gameSky.printConstraints();
+
+        /*
+        *
+        * Skyscrapper
+        *
+        *  option:
+        *           0 - BT
+        *           1 - FC
+        *           2 - BT with fill first
+        *           3 - FC with fill first
+        *
+        *  heuristic:
+        *           0 - bez
+        *           1 - najbardziej ograniczona zmienna
+        *           2 - najmniej ograniczona zmienna
+        *
+        * */
+
+        SGame skyscarpper_game = loader.readSky("test_sky_4_0.txt");
+        SkyscrapperSolver skyscrapper_solver = new SkyscrapperSolver(skyscarpper_game);
+
+        skyscrapper_solver.solve(0, 0);
+        skyscrapper_solver.solve(0, 1);
     }
 }

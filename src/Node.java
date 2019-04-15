@@ -55,6 +55,15 @@ public class Node{
         cord_y = y;
     }
 
+    public int getFirstValueFromDomain(){
+        for(int i = 0; i<domain.length; i++){
+            if(domain[i] != 0){
+                return i+1;
+            }
+        }
+        return 0;
+    }
+
     public boolean isDomainEmpty(){
         for(int i = 0; i < domain.length; i++) {
             if (domain[i] == 1)
@@ -85,14 +94,5 @@ public class Node{
 
     public void printNode(){
         System.out.println("["+cord_x+","+cord_y+"]: "+value);
-    }
-
-    public int getFirstValueFromDomain(){
-        for(int i = 0; i<domain.length; i++){
-            if(domain[i] != 0){
-                return i+1;
-            }
-        }
-        return 0;
     }
 }

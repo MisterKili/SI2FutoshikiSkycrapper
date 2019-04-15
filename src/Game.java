@@ -158,6 +158,16 @@ public abstract class Game {
         return true;
     }
 
+    public Node getNext(int x, int y, int option){
+        if(option == 0)
+            return nextNode(x, y);
+        if(option == 1)
+            return mostConstrainedNode();
+        if(option == 2)
+            return leastConstrainedNode();
+        return null;
+    }
+
     public Node nextNode(int x, int y){
         if(y==board.length-1 && x<board.length-1){ //konczy się rząd -> zwraca pierwszy z następnego rzędu
             return board[x+1][0];
@@ -192,8 +202,10 @@ public abstract class Game {
                 nextOne = nextNode(i,j);
                 i = nextOne.cord_x;
                 j = nextOne.cord_y;
+                min = nextOne.countDomainSize();
             }
         }
+        nextOne.printNode();
         return nextOne;
     }
 
