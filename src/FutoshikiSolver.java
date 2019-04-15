@@ -3,6 +3,7 @@ public class FutoshikiSolver extends Solver{
     FGame board;
     boolean solved = false;
 
+
     public FutoshikiSolver(FGame game){
         loaded_board = game;
         steps = 0;
@@ -12,97 +13,90 @@ public class FutoshikiSolver extends Solver{
 
     }
 
-    public void solve(int option){
-        if(option == 0) {
-
-//            if(backtracking(0,0)) {
-//                System.out.println("--------Solved bt--------");
-//                System.out.println("In " + steps + " steps");
-//                System.out.println("-------------------------");
-//
-//            }
-//        System.out.println(solutions);
-//            if(forwardChecking(0,0)) {
-//                System.out.println("--------Solved bt--------");
-//                System.out.println("In " + steps + " steps");
-//                System.out.println("-------------------------");
-//
-//            }
-            Node start = board.mostConstrainedNode();
-            if (bt(start.cord_x, start.cord_y)) {
-                System.out.println("--------Solved bt--------");
-                System.out.println("In " + steps + " steps");
-                System.out.println("-------------------------");
-
-            }
-        }
+    public void solve(int option, int heuristic){
+        this.heuristic = heuristic;
+        if(option == 0)
+            startBT();
+        if(option == 1)
+            startFC();
     }
 
-    public boolean backtracking(int x, int y){
-        System.out.println("-------------------------");
-        board.printBoard();
-        System.out.println(board.isComplete());
-        if(board.isComplete())
-            return true;
+    private void startBT(){
+        steps = 0;
+        board = new FGame(loaded_board);
+        setStart();
+        System.out.println("Solving Futoshiki - backtracking");
+        backtracking(startX,startY, heuristic);
+    }
 
+    private void startFC(){
+        steps = 0;
+        board = new FGame(loaded_board);
+        setStart();
+        System.out.println("Solving Futoshiki - forward checking");
+        forwardChecking(startX,startY, heuristic);
+    }
+
+    public boolean backtracking(int x, int y, int option){
+        if(board.isComplete()) {
+            board.printBoard();
+
+            System.out.println("*********** BT SOLVED *************");
+            System.out.println("IN " + steps + " STEPS");
+            System.out.println("*********************************** \n");
+            return true;
+        }
+        board.printBoard();
+        System.out.println();
+        System.out.println("---------");
+        System.out.println();
         for(int num = 1; num <= board.size; num++){
             if(board.check(x, y, num)){
                 if(!board.board[x][y].isConstant) {
                     board.board[x][y].setValue(num);
                     steps++;
+                    System.out.println("pupa");
                 }
-                if(board.nextNode(x, y) == null)
+                if(board.getNext(x, y, option) == null){
                     return false;
-                if(backtracking(board.nextNode(x, y).getCord_x(), board.nextNode(x, y).getCord_y()))
+                }
+                if(backtracking(board.getNext(x, y, option).getCord_x(), board.getNext(x, y, option).getCord_y(), option)) {
                     return true;
+                }
+                board.getNext(x, y,option).printNode();
             }
+            System.out.println(board.isComplete());
             board.board[x][y].setValue(0);
+
         }
-        if(board.isComplete())
+        if(board.isComplete()) {
             return true;
+        }
         return false;
     }
 
-    public boolean forwardChecking(int x, int y){
-        System.out.println("-------------------------");
-        board.printBoard();
-//        for (int i=0; i<board.size; i++) {
-//            for (int j = 0; j < board.size; j++) {
-//                System.out.print("x "+i +" y "+j);
-//                for (int k = 0; k < board.size; k++)
-//                    System.out.print(board.board[i][j].domain[k] + " ");
-//                System.out.println();
-//            }
-//
-//        }
-        System.out.println(board.isComplete());
-        if(board.isComplete())
+    public boolean forwardChecking(int x, int y, int option){
+        if(board.isComplete()) {
+            board.printBoard();
+            System.out.println("*********** FC SOLVED *************");
+            System.out.println("IN " + steps + " STEPS");
+            System.out.println("*********************************** \n");
             return true;
+        }
         steps++;
         for(int num = 1; num <= board.size; num++){
             if(board.check(x, y, num)){
                 board.board[x][y].setValue(num);
                 board.calculateDomains();
-                for (int i=0; i<board.size; i++) {
-                    for (int j = 0; j < board.size; j++) {
-                        System.out.print("x "+i +" y "+j+ " ");
-                        for (int k = 0; k < board.size; k++)
-                            System.out.print(board.board[i][j].domain[k] + " ");
-                        System.out.println();
-                    }
-
-                }
                 boolean checkDomains = true;
                 for(int i = 0; i<board.size && checkDomains; i++){
-                    System.out.println(board.isDomainEmpty(i, y));
-                    System.out.println(board.isDomainEmpty(x, i));
                     if(board.isDomainEmpty(i, y) || board.isDomainEmpty(x, i))
                         checkDomains = false;
                 }
                 if(checkDomains) {
                     if (board.nextNode(x, y) == null)
                         return false;
-                    if (forwardChecking(board.nextNode(x, y).getCord_x(), board.nextNode(x, y).getCord_y()))
+                    if (forwardChecking(board.getNext(x, y, option).getCord_x(), board.getNext(x, y, option).getCord_y(), option))
                         return true;
                 }
             }
@@ -111,35 +105,22 @@ public class FutoshikiSolver extends Solver{
         return false;
     }
 
-    public boolean bt(int x, int y){
-        if(solved) return true;
-        else {
-            steps++;
-            for (int i = 1; i < board.size + 1; i++) {
-                if (board.check(x, y, i)) {
-                    board.board[x][y].setValue(i);
-
-                    //printBoard(board);
-                    if (board.nextMostConstrainedNode(x, y) == null) {
-                        //finishTime = System.nanoTime();
-                        System.out.println("*********** BT SOLVED *************");
-                        System.out.println("IN " + steps + " STEPS");
-                        System.out.println("*********************************** \n");
-                        board.printBoard();
-                        solved = true;
-                        return true;
-                    } else {
-                        int nextX = board.nextMostConstrainedNode(x, y).getCord_x();
-                        int nextY = board.nextMostConstrainedNode(x, y).getCord_y();
-                        bt(nextX, nextY);
-                    }
-                }
-                board.board[x][y].setValue(0);
-            }
-            if(solved)
-                return true;
-            else
-                return false;
+    private void setStart(){
+        if(heuristic == 0){
+            startX = 0;
+            startY = 0;
+        }
+        if(heuristic == 1){
+            Node start = board.mostConstrainedNode();
+            start.printNode();
+            startX = start.cord_x;
+            startY = start.cord_y;
+        }
+        if(heuristic == 2){
+            Node start = board.leastConstrainedNode();
+            start.printNode();
+            startX = start.cord_x;
+            startY = start.cord_y;
         }
     }
 }

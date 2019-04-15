@@ -33,7 +33,6 @@ public class FGame extends Game {
         }
     }
 
-    @Override
     public boolean checkConstraints(int x, int y, int num) {
         int x1, x2, y1, y2;
         for(int i=0; i<constraints.length; i++){
@@ -48,9 +47,14 @@ public class FGame extends Game {
 //            System.out.println("x,y " + x+"."+y+", num : "+num);
             if(x1 == x && y1 == y){
 //                System.out.println("x2, y2 get val: " + board[x2][y2].getValue());
+                if(num == size)
+                    return false;
                 if(board[x2][y2].getValue() != 0 && num >= board[x2][y2].getValue())
                     return false;
+
             }else if(x2 == x && y2 == y){
+                if(num == 1)
+                    return false;
                 if(board[x1][y1].getValue() != 0 && num <= board[x1][y1].getValue())
                     return false;
             }
@@ -87,9 +91,9 @@ public class FGame extends Game {
                 if(checkBetween(i, j, i+1, j)==0)
                     System.out.print("\t");
                 if(checkBetween(i, j, i+1, j)==1)
-                    System.out.print("\\/\t");
+                    System.out.print("v\t");
                 if(checkBetween(i, j, i+1, j)==-1)
-                    System.out.print("/\\\t");
+                    System.out.print("^\t");
                 System.out.print("\t");
             }
             System.out.print("\n");
@@ -106,4 +110,6 @@ public class FGame extends Game {
         }
         return result;
     }
+
+
 }

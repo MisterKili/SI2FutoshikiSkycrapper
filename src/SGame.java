@@ -156,6 +156,20 @@ public class SGame extends Game {
         return true;
     }
 
+ /*   public boolean checkCrossConstraints(int x, int y){
+
+    }*/
+    public boolean checkingForward(int x, int y, int num){
+        board[x][y].setValue(num);
+        if(nextNode(x,y).countDomainSize() == 1){
+            nextNode(x,y).setValue(nextNode(x,y).getFirstValueFromDomain());
+            if(isOK()){
+
+            }
+        }
+        return true;
+    }
+
     public boolean calculateDomains(){
         for (int i=0; i<size; i++){
             for (int j = 0; j<size; j++){
@@ -174,6 +188,8 @@ public class SGame extends Game {
         }
         return true;
     }
+
+
 
     public boolean checkForward(int row, int col, int val){
 //        System.out.println("checking roward: row|col|val"+row+"\t"+col+"\t"+val);
@@ -289,8 +305,6 @@ public class SGame extends Game {
         }
     }
 
-    public boolean checkForward(int row, int col){
-        return true;
-    }
+
 
 }
