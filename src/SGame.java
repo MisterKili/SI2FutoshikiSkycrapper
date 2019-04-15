@@ -151,21 +151,8 @@ public class SGame extends Game {
     @Override
     public boolean checkConstraints(int x, int y, int num) {
         if(isComplete()){
+            System.out.println("in compl");
             return isOK();
-        }
-        return true;
-    }
-
- /*   public boolean checkCrossConstraints(int x, int y){
-
-    }*/
-    public boolean checkingForward(int x, int y, int num){
-        board[x][y].setValue(num);
-        if(nextNode(x,y).countDomainSize() == 1){
-            nextNode(x,y).setValue(nextNode(x,y).getFirstValueFromDomain());
-            if(isOK()){
-
-            }
         }
         return true;
     }
@@ -176,6 +163,7 @@ public class SGame extends Game {
                 for (int k = 0; k<size; k++)
                     board[i][j].domain[k] = 0;
                 for(int num = 1; num <=size; num++){ //nie wiem czy przy wyszukiwaniu wszystkich rozwiązań, nie trzeba będzie zmodyfikować, ale na razie zostawiam
+//                    System.out.println(checkForward(i, j, num));
                     if(board[i][j].getValue() == 0 && checkForward(i, j, num)){
 //                        printBoard();
 //                        printDomains();
@@ -189,77 +177,117 @@ public class SGame extends Game {
         return true;
     }
 
+    public boolean checkForward(int row, int col, int num){
+        boolean lastInRow = false;
+        boolean lastInCol = false;
+        int countRow = 0;
+        int countCol = 0;
+        for(int i = 0; i<size; i++){
+            if(board[row][i].getValue() != 0)
+                countRow++;
+            if(board[i][col].getValue() != 0)
+                countCol++;
+        }
+        //ostatni w rzędzie
+        if(countRow>1){
+            return checkRow(row, col, num);
 
+        }else //ostatni w kolumnie
+            if(countCol>1){
+                return checkCol(row, col, num);
+            }
+        return true;
+    }
 
-    public boolean checkForward(int row, int col, int val){
-//        System.out.println("checking roward: row|col|val"+row+"\t"+col+"\t"+val);
-        //z góry
-        int wanted = constraints[0][col];
-        int visibleBefore = 1;
-        int visibleAfter = size - val;
+    private boolean checkCol(int r, int col, int num) {
+
+        //kolumna z góry:
+        int visible = 1;
         int highest = board[0][col].getValue();
+        int wanted = constraints[0][col];
         if(wanted!=0){
-            for(int x = 0; x <= row; x++){
-                if(board[x][col].getValue()>highest){
-                    visibleBefore++;
-                    highest = board[x][col].getValue();
+            for(int row = 0 ; row < size; row++){
+                if(row==r){
+                    if(num > highest){
+                        visible++;
+                        highest=num;
+                    }
+                }else if(board[row][col].getValue()>highest) {
+                    visible++;
+                    highest = board[row][col].getValue();
                 }
             }
-            int visible = visibleBefore + visibleAfter;
-            if(visible<wanted){
+            if(visible!=wanted) {
+//                    System.out.println("RETURN FALSE top: "+ col);
                 return false;
             }
         }
-        //z dołu
+
+        //kolumna z dołu:
+        visible = 1;
+        highest = board[size - 1][col].getValue();
         wanted = constraints[1][col];
-        visibleBefore = 1;
-        visibleAfter = size - val;
-        highest = board[size- 1][col].getValue();
-        if(wanted!=0){
-            for(int x = size-1; x>=row; x--){
-                if(board[x][col].getValue()>highest){
-                    visibleBefore++;
-                    highest = board[x][col].getValue();
+        if (wanted != 0) {
+            for (int row = size - 1; row >= 0; row--) {
+                if(row==r){
+                    if(num > highest){
+                        visible++;
+                        highest=num;
+                    }
+                }else if (board[row][col].getValue() > highest) {
+                    visible++;
+                    highest = board[row][col].getValue();
                 }
             }
-            int visible = visibleBefore + visibleAfter;
-            if(visible<wanted){
+            if (visible != wanted) {
+//                    System.out.println("RETURN FALSE bottom: "+ col);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkRow(int row, int c, int num){
+        //z lewej:
+        int visible = 1;
+        int highest = board[row][0].getValue();
+        int wanted = constraints[2][row];
+        if(wanted!=0){
+            for(int col = 0; col<size; col++){
+                if(col==c){
+                    if(num > highest){
+                        visible++;
+                        highest=num;
+                    }
+                }else if(board[row][col].getValue()>highest){
+                    visible++;
+                    highest = board[row][col].getValue();
+                }
+            }
+            if(visible!=wanted) {
+//                    System.out.println("RETURN FALSE LEFT: "+ row);
                 return false;
             }
         }
 
-        //z lewej
-        wanted = constraints[2][row];
-        visibleBefore = 1;
-        visibleAfter = size - val;
-        highest = board[row][0].getValue();
-        if(wanted!=0){
-            for(int x = 0; x<=col; x++){
-                if(board[row][x].getValue()>highest){
-                    visibleBefore++;
-                    highest = board[row][x].getValue();
-                }
-            }
-            int visible = visibleBefore + visibleAfter;
-            if(visible<wanted){
-                return false;
-            }
-        }
-
-        //z prawej
-        wanted = constraints[3][row];
-        visibleBefore = 1;
-        visibleAfter = size - val;
+        visible = 1;
         highest = board[row][size-1].getValue();
+        wanted = constraints[3][row];
         if(wanted!=0){
-            for(int x = size-1; x>=col; x--){
-                if(board[row][x].getValue()>highest){
-                    visibleBefore++;
-                    highest = board[row][x].getValue();
+            for(int col = size-1; col>=0; col--){
+                if(col==c){
+                    if(num > highest){
+                        visible++;
+                        highest=num;
+                    }
+                }else if(board[row][col].getValue()>highest){
+                    visible++;
+                    highest = board[row][col].getValue();
                 }
             }
-            int visible = visibleBefore + visibleAfter;
-            if(visible<wanted){
+            if(visible!=wanted) {
+
+//                    System.out.println("RETURN FALSE right: "+ row);
                 return false;
             }
         }
@@ -305,6 +333,8 @@ public class SGame extends Game {
         }
     }
 
-
+    public boolean checkForward(int row, int col){
+        return true;
+    }
 
 }

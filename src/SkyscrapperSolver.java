@@ -76,7 +76,7 @@ public class SkyscrapperSolver extends Solver {
                     board.board[row][col].setValue(i);
                     if (board.check(row, col, i)) {
                         steps++;
-                        if (board.nextNode(row, col) == null) {
+                        if (board.getNext(row, col, option) == null) {
                             //no empty field was found -> we found the solution
                             board.printBoard();
                             System.out.println("*********** BT SOLVED *************");
@@ -107,6 +107,7 @@ public class SkyscrapperSolver extends Solver {
     //TODO: forward
 
     public boolean forwardChecking(int row, int col, int option){
+
         if(board.board[row][col].isConstant){
             int nextX = board.getNext(row, col, option).getCord_x();
             int nextY = board.getNext(row, col, option).getCord_y();
@@ -121,18 +122,21 @@ public class SkyscrapperSolver extends Solver {
                 int val = i;
                 if (board.check(row, col, val)) {
 //                    board.calculateDomains();
+                    System.out.println(board.checkForward(row,col, val));
+                    if(board.checkForward(row,col, val)){
                     board.board[row][col].setValue(i);
+
                     board.calculateDomains();
                     boolean checkDomains = true;
                     for (int j = 0; j < board.size && checkDomains; j++) {
-
                         if (board.isDomainEmpty(j, col) || board.isDomainEmpty(row, j))
                             checkDomains = false;
                     }
 //                System.out.println("checking domains: "+checkDomains);
+                    board.printDomains();
                     if (checkDomains && board.check(row, col, val)) {
-                        steps++;
-                        if (board.nextNode(row, col) == null) {
+
+                        if (board.getNext(row, col, option) == null) {
                             //no empty field was found -> we found the solution
                             board.printBoard();
                             System.out.println("*********** FC SOLVED *************");
@@ -149,6 +153,7 @@ public class SkyscrapperSolver extends Solver {
                                 board.board[row][col].setValue(0);
                             }
                         }
+                    }
                     } else {
                         board.board[row][col].setValue(0);
                     }
