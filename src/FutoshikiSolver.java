@@ -104,11 +104,13 @@ public class FutoshikiSolver extends Solver{
         }
         if(heuristic == 1){
             Node start = board.mostConstrainedNode();
+            start.printNode();
             startX = start.cord_x;
             startY = start.cord_y;
         }
         if(heuristic == 2){
             Node start = board.leastConstrainedNode();
+            start.printNode();
             startX = start.cord_x;
             startY = start.cord_y;
         }

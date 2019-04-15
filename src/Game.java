@@ -202,8 +202,10 @@ public abstract class Game {
                 nextOne = nextNode(i,j);
                 i = nextOne.cord_x;
                 j = nextOne.cord_y;
+                min = nextOne.countDomainSize();
             }
         }
+        nextOne.printNode();
         return nextOne;
     }
 
