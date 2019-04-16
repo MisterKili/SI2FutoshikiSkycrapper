@@ -24,6 +24,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     private void startBT(){
+        time = System.nanoTime();
         steps = 0;
         board = new SGame(loaded_board);
         setStart();
@@ -32,6 +33,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     private void startFC(){
+        time = System.nanoTime();
         steps = 0;
         board = new SGame(loaded_board);
         setStart();
@@ -40,6 +42,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     private void startBTwithFirst(){
+        time = System.nanoTime();
         steps = 0;
         setStart();
         board = new SGame(loaded_board);
@@ -49,6 +52,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     private void startFCwithFirst(){
+        time = System.nanoTime();
         steps = 0;
         board = new SGame(loaded_board);
         fillConstantValues();
@@ -74,15 +78,20 @@ public class SkyscrapperSolver extends Solver {
                 int val = i;
                 if (board.check(row, col, i)) {
                     board.board[row][col].setValue(i);
+//                    board.calculateDomains();
+//                    board.printBoard();
                     if (board.check(row, col, i)) {
                         steps++;
                         if (board.getNext(row, col, option) == null) {
                             //no empty field was found -> we found the solution
                             board.printBoard();
+                            double endTime = System.nanoTime();
                             System.out.println("*********** BT SOLVED *************");
                             System.out.println("IN " + steps + " STEPS");
+                            System.out.println("IN " + (endTime-time)/1000000000 + " SEC");
                             System.out.println("*********************************** \n");
                             board.board[row][col].setValue(0);
+
                         } else {
                             int nextX = board.getNext(row, col, option).getCord_x();
                             int nextY = board.getNext(row, col, option).getCord_y();
@@ -121,39 +130,36 @@ public class SkyscrapperSolver extends Solver {
                 //todo val = heuristicsGetVal(board,row,col)
                 int val = i;
                 if (board.check(row, col, val)) {
-//                    board.calculateDomains();
-                    System.out.println(board.checkForward(row,col, val));
                     if(board.checkForward(row,col, val)){
-                    board.board[row][col].setValue(i);
+                        board.board[row][col].setValue(i);
 
-                    board.calculateDomains();
-                    boolean checkDomains = true;
-                    for (int j = 0; j < board.size && checkDomains; j++) {
-                        if (board.isDomainEmpty(j, col) || board.isDomainEmpty(row, j))
-                            checkDomains = false;
-                    }
-//                System.out.println("checking domains: "+checkDomains);
-                    board.printDomains();
-                    if (checkDomains && board.check(row, col, val)) {
+                        board.calculateDomains();
+                        boolean checkDomains = true;
+                        for (int j = 0; j < board.size && checkDomains; j++) {
+                            if (board.isDomainEmpty(j, col) || board.isDomainEmpty(row, j))
+                                checkDomains = false;
+                        }
+                        if (checkDomains && board.check(row, col, val)) {
+                            steps++;
+                            if (board.getNext(row, col, option) == null) {
+                                board.printBoard();
+                                double endTime = System.nanoTime();
+                                System.out.println("*********** FC SOLVED *************");
+                                System.out.println("IN " + steps + " STEPS");
+                                System.out.println("IN " + (endTime-time)/1000000000 + " SEC");
+                                System.out.println("*********************************** \n");
 
-                        if (board.getNext(row, col, option) == null) {
-                            //no empty field was found -> we found the solution
-                            board.printBoard();
-                            System.out.println("*********** FC SOLVED *************");
-                            System.out.println("IN " + steps + " STEPS");
-                            System.out.println("*********************************** \n");
-
-                            board.board[row][col].setValue(0);
-                        } else {
-                            int nextX = board.getNext(row, col, option).getCord_x();
-                            int nextY = board.getNext(row, col, option).getCord_y();
-                            boolean correct = forwardChecking(nextX, nextY, option);
-                            //going back
-                            if (!correct) {
                                 board.board[row][col].setValue(0);
+                            } else {
+                                int nextX = board.getNext(row, col, option).getCord_x();
+                                int nextY = board.getNext(row, col, option).getCord_y();
+                                boolean correct = forwardChecking(nextX, nextY, option);
+                                //going back
+                                if (!correct) {
+                                    board.board[row][col].setValue(0);
+                                }
                             }
                         }
-                    }
                     } else {
                         board.board[row][col].setValue(0);
                     }
@@ -165,7 +171,7 @@ public class SkyscrapperSolver extends Solver {
     }
 
     public void fillConstantValues(){
-        for(int i = 0; i<board.size; i++){
+        for(int i = 0; i<4; i++){
             for(int j = 0; j<board.size; j++){
                 if(board.constraints[i][j] == board.size){
                     if(i == 0){

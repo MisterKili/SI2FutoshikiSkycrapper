@@ -18,16 +18,16 @@ public class Main {
         *           2 - najmniej ograniczona zmienna
         * */
 
-        FGame futoshiki_game = loader.readFuto("test_futo_4_0.txt");
+        FGame futoshiki_game = loader.readFuto("test_futo_8_0.txt");
 
         FutoshikiSolver futoshiki_solver = new FutoshikiSolver(futoshiki_game);
 
-        futoshiki_solver.solve(0, 1);
-        futoshiki_solver.solve(0, 2);
-//
+//        futoshiki_solver.solve(0, 0);
+//        futoshiki_solver.solve(0, 1);
+////        futoshiki_solver.solve(0, 2);
 //        futoshiki_solver.solve(1, 0);
 //        futoshiki_solver.solve(1, 1);
-//        futoshiki_solver.solve(0, 2);
+//        futoshiki_solver.solve(1, 2);
 
 
 
@@ -48,10 +48,14 @@ public class Main {
         *
         * */
 
-        SGame skyscarpper_game = loader.readSky("test_sky_4_0.txt");
+        SGame skyscarpper_game = loader.readSky("test_sky_6_0.txt");
         SkyscrapperSolver skyscrapper_solver = new SkyscrapperSolver(skyscarpper_game);
 
-//        skyscrapper_solver.solve(0, 0);
+        skyscrapper_solver.solve(0, 0);
+        skyscrapper_solver.solve(2, 0);
+        skyscrapper_solver.solve(0, 1);
+        skyscrapper_solver.solve(2, 1);
 //        skyscrapper_solver.solve(1, 0);
+//        skyscrapper_solver.solve(3, 0);
     }
 }

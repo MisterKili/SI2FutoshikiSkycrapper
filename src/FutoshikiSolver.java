@@ -22,6 +22,7 @@ public class FutoshikiSolver extends Solver{
     }
 
     private void startBT(){
+        time = System.nanoTime();
         steps = 0;
         board = new FGame(loaded_board);
         setStart();
@@ -31,6 +32,7 @@ public class FutoshikiSolver extends Solver{
 
     private void startFC(){
         steps = 0;
+        time = System.nanoTime();
         board = new FGame(loaded_board);
         setStart();
         System.out.println("Solving Futoshiki - forward checking");
@@ -57,10 +59,13 @@ public class FutoshikiSolver extends Solver{
                         if (board.getNext(row, col, option) == null) {
                             //no empty field was found -> we found the solution
                             board.printBoard();
+                            double endTime = System.nanoTime();
                             System.out.println("*********** BT SOLVED *************");
                             System.out.println("IN " + steps + " STEPS");
+                            System.out.println("IN " + (endTime-time)/1000000000 + " SEC");
                             System.out.println("*********************************** \n");
                             board.board[row][col].setValue(0);
+                            return true;
                         } else {
                             int nextX = board.getNext(row, col, option).getCord_x();
                             int nextY = board.getNext(row, col, option).getCord_y();
@@ -103,18 +108,19 @@ public class FutoshikiSolver extends Solver{
                             if (board.isDomainEmpty(j, col) || board.isDomainEmpty(row, j))
                                 checkDomains = false;
                         }
-//                System.out.println("checking domains: "+checkDomains);
-//                        board.printDomains();
                         if (checkDomains && board.check(row, col, val)) {
                             steps++;
                             if (board.getNext(row, col, option) == null) {
                                 //no empty field was found -> we found the solution
                                 board.printBoard();
+                                double endTime = System.nanoTime();
                                 System.out.println("*********** FC SOLVED *************");
                                 System.out.println("IN " + steps + " STEPS");
+                                System.out.println("IN " + (endTime-time)/1000000000 + " SEC");
                                 System.out.println("*********************************** \n");
 
                                 board.board[row][col].setValue(0);
+                                return true;
                             } else {
                                 int nextX = board.getNext(row, col, option).getCord_x();
                                 int nextY = board.getNext(row, col, option).getCord_y();

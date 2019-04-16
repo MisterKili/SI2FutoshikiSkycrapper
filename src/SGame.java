@@ -151,7 +151,6 @@ public class SGame extends Game {
     @Override
     public boolean checkConstraints(int x, int y, int num) {
         if(isComplete()){
-            System.out.println("in compl");
             return isOK();
         }
         return true;
@@ -188,36 +187,39 @@ public class SGame extends Game {
             if(board[i][col].getValue() != 0)
                 countCol++;
         }
+//        System.out.println("rowCount: "+countRow + " colCount: "+countCol);
         //ostatni w rzędzie
-        if(countRow>1){
+        if(countRow==size-1){
+//            System.out.println("row: " + checkRow(row, col, num));
             return checkRow(row, col, num);
 
         }else //ostatni w kolumnie
-            if(countCol>1){
+            if(countCol==size-1){
+//                System.out.println("col: " + checkRow(row, col, num));
                 return checkCol(row, col, num);
             }
         return true;
     }
-
     private boolean checkCol(int r, int col, int num) {
-
+        board[r][col].setValue(num);
         //kolumna z góry:
         int visible = 1;
         int highest = board[0][col].getValue();
         int wanted = constraints[0][col];
         if(wanted!=0){
             for(int row = 0 ; row < size; row++){
-                if(row==r){
+                /*if(row==r){
                     if(num > highest){
                         visible++;
                         highest=num;
                     }
-                }else if(board[row][col].getValue()>highest) {
+                }else */if(board[row][col].getValue()>highest) {
                     visible++;
                     highest = board[row][col].getValue();
                 }
             }
             if(visible!=wanted) {
+                board[r][col].setValue(0);
 //                    System.out.println("RETURN FALSE top: "+ col);
                 return false;
             }
@@ -229,43 +231,47 @@ public class SGame extends Game {
         wanted = constraints[1][col];
         if (wanted != 0) {
             for (int row = size - 1; row >= 0; row--) {
-                if(row==r){
+                /*if(row==r){
                     if(num > highest){
                         visible++;
                         highest=num;
                     }
-                }else if (board[row][col].getValue() > highest) {
+                }else */if (board[row][col].getValue() > highest) {
                     visible++;
                     highest = board[row][col].getValue();
                 }
             }
             if (visible != wanted) {
 //                    System.out.println("RETURN FALSE bottom: "+ col);
+                board[r][col].setValue(0);
                 return false;
             }
         }
+        board[r][col].setValue(0);
         return true;
     }
 
     private boolean checkRow(int row, int c, int num){
+        board[row][c].setValue(num);
         //z lewej:
         int visible = 1;
         int highest = board[row][0].getValue();
         int wanted = constraints[2][row];
         if(wanted!=0){
             for(int col = 0; col<size; col++){
-                if(col==c){
+               /* if(col==c){
                     if(num > highest){
                         visible++;
                         highest=num;
                     }
-                }else if(board[row][col].getValue()>highest){
+                }else */if(board[row][col].getValue() > highest){
                     visible++;
                     highest = board[row][col].getValue();
                 }
             }
             if(visible!=wanted) {
-//                    System.out.println("RETURN FALSE LEFT: "+ row);
+                board[row][c].setValue(0);
+//                System.out.println("RETURN FALSE LEFT: "+ row);
                 return false;
             }
         }
@@ -275,23 +281,23 @@ public class SGame extends Game {
         wanted = constraints[3][row];
         if(wanted!=0){
             for(int col = size-1; col>=0; col--){
-                if(col==c){
+                /*if(col==c){
                     if(num > highest){
                         visible++;
                         highest=num;
                     }
-                }else if(board[row][col].getValue()>highest){
+                }else */if(board[row][col].getValue()>highest){
                     visible++;
                     highest = board[row][col].getValue();
                 }
             }
             if(visible!=wanted) {
-
+                board[row][c].setValue(0);
 //                    System.out.println("RETURN FALSE right: "+ row);
                 return false;
             }
         }
-
+        board[row][c].setValue(0);
         return true;
     }
 
@@ -332,9 +338,4 @@ public class SGame extends Game {
             return true;
         }
     }
-
-    public boolean checkForward(int row, int col){
-        return true;
-    }
-
 }
