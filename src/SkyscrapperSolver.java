@@ -6,6 +6,7 @@ public class SkyscrapperSolver extends Solver {
 
     public SkyscrapperSolver(SGame game){
         loaded_board = game;
+        board = game;
         steps = 0;
         solutions = 0;
         time = 0;
@@ -64,7 +65,7 @@ public class SkyscrapperSolver extends Solver {
     public boolean backtracking(int row, int col, int option){
 //        System.out.println("step: "+steps);
 //        board.printBoard();
-        if(board.board[row][col].isConstant){
+        if(board.board[row][col].isConstant  && board.getNext(row, col, option) != null){
             int nextX = board.getNext(row, col, option).getCord_x();
             int nextY = board.getNext(row, col, option).getCord_y();
             boolean correct = backtracking(nextX, nextY, option);
@@ -117,7 +118,7 @@ public class SkyscrapperSolver extends Solver {
 
     public boolean forwardChecking(int row, int col, int option){
 
-        if(board.board[row][col].isConstant){
+        if(board.board[row][col].isConstant && board.getNext(row, col, option) != null){
             int nextX = board.getNext(row, col, option).getCord_x();
             int nextY = board.getNext(row, col, option).getCord_y();
             boolean correct = forwardChecking(nextX, nextY, option);
@@ -171,7 +172,9 @@ public class SkyscrapperSolver extends Solver {
     }
 
     public void fillConstantValues(){
-        for(int i = 0; i<4; i++){
+        System.out.println("Board size "+board.board.length);
+        System.out.println("Constants "+board.constraints.length);
+        for(int i = 0; i<board.constraints.length; i++){
             for(int j = 0; j<board.size; j++){
                 if(board.constraints[i][j] == board.size){
                     if(i == 0){
@@ -187,7 +190,6 @@ public class SkyscrapperSolver extends Solver {
                         fillRowDesc(j);
                     }
                 }
-                //sprawdzic
                 if(board.constraints[i][j] == 1){
                     if(i == 0){
                         board.board[0][j].value = board.size;

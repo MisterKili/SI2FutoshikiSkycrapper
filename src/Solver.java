@@ -1,6 +1,6 @@
 public abstract class Solver {
 
-    protected int steps =0;
+    protected long steps =0;
     protected int solutions;
     protected long time;
     int heuristic;
